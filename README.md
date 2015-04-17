@@ -4,7 +4,7 @@ new controlmanagement
 --- 
 
 ## メンバー 
- * M1 
+ * M1　
  *　岩村 
  * 河野 
  * 丸山 
