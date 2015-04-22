@@ -37,28 +37,10 @@ PENC_IN1_8 =
 PENC_IN9_16 = 
 
 
-# 9: PencGetFilter
-# =============
-
-# PencGetFilter : nChannel
-# ------------------
-PENC_IN1_8 = 
-PENC_IN9_16 = 
-
-
 # 27: PencSetEventMask
 # =============
 
 # PencSetEventMask : nChannel
-# ------------------
-PENC_EVENT_BOARD = 
-PENC_EVENT_DIO = 
-
-
-# 28: PencGetEventMask
-# =============
-
-# PencGetEventMask : nChannel
 # ------------------
 PENC_EVENT_BOARD = 
 PENC_EVENT_DIO = 
@@ -91,7 +73,10 @@ PENC_ERROR_NULL_POINTER = 0xc0001011
 PENC_ERROR_PARAMETER = 0xc0001012
 PENC_ERROR_INVALID_FILTER = 0xc0001013
 PENC_ERROR_INVALID_DO = 0xc0001014
-PENC_ERROR_INVALID_RSTINMASK = 0xc0001014
+PENC_ERROR_INVALID_RSTINMASK = 0xc0001015
+
+
+
 
 # =========
 # Functions
