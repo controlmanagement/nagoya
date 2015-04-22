@@ -232,7 +232,7 @@ class DeviceConfigEx(pyinterface.Identifer):
 	bits[26].set_params('DGFILTER', 'ENABLED', 'DISABLED')
 	pass
 
-# 28: DioSetTimerConfig
+# 28: DioSetTimerConfig  ???????????????????????????????????????????????????????
 # ------------------
 class TimerConfig(pyinterface.Identifer):
 	size = 8
@@ -245,6 +245,58 @@ class TimerConfig(pyinterface.Identifer):
 	bits[4].set_params('BASE_CYCLE', '', '')
 	bits[5].set_params('BASE_CYCLE', '', '')
 	bits[6].set_params('BASE_CYCLE', '', '')
+	pass
+
+# 30: DioGetTimerCount   ????????????????????????????
+# ------------------
+class TimerCount(pyinterface.Identifer):
+	size = 8
+	bits = [pyinterface.BitIdentiferElement(i) for i in range(size)]
+	del(i)
+	bits[0].set_params('CYCLE', '', '')
+	bits[1].set_params('CYCLE', '', '')
+	bits[2].set_params('CYCLE', '', '')
+	bits[3].set_params('CYCLE', '', '')
+	pass
+
+# 31: DioEintSetIrqMask
+# ------------------
+class EintIrqMask(pyinterface.Identifer):
+	size = 32
+	bits = [pyinterface.BitIdentiferElement(i) for i in range(size)]
+	del(i)
+	bits[0].set_params('IR1', 'UNMASK', 'MASK')
+	bits[1].set_params('IR2', 'UNMASK', 'MASK')
+	bits[2].set_params('IR3', 'UNMASK', 'MASK')
+	bits[3].set_params('IR4', 'UNMASK', 'MASK')
+	bits[4].set_params('IR5', 'UNMASK', 'MASK')
+	bits[5].set_params('IR6', 'UNMASK', 'MASK')
+	bits[6].set_params('IR7', 'UNMASK', 'MASK')
+	bits[7].set_params('IR8', 'UNMASK', 'MASK')
+	bits[8].set_params('IR9', 'UNMASK', 'MASK')
+	bits[9].set_params('IR10', 'UNMASK', 'MASK')
+	bits[10].set_params('IR11', 'UNMASK', 'MASK')
+	bits[11].set_params('IR12', 'UNMASK', 'MASK')
+	bits[12].set_params('IR13', 'UNMASK', 'MASK')
+	bits[13].set_params('IR14', 'UNMASK', 'MASK')
+	bits[14].set_params('IR15', 'UNMASK', 'MASK')
+	bits[15].set_params('IR16', 'UNMASK', 'MASK')
+	bits[16].set_params('IR17', 'UNMASK', 'MASK')
+	bits[17].set_params('IR18', 'UNMASK', 'MASK')
+	bits[18].set_params('IR19', 'UNMASK', 'MASK')
+	bits[19].set_params('IR20', 'UNMASK', 'MASK')
+	bits[20].set_params('IR21', 'UNMASK', 'MASK')
+	bits[21].set_params('IR22', 'UNMASK', 'MASK')
+	bits[22].set_params('IR23', 'UNMASK', 'MASK')
+	bits[23].set_params('IR24', 'UNMASK', 'MASK')
+	bits[24].set_params('IR25', 'UNMASK', 'MASK')
+	bits[25].set_params('IR26', 'UNMASK', 'MASK')
+	bits[26].set_params('IR27', 'UNMASK', 'MASK')
+	bits[27].set_params('IR28', 'UNMASK', 'MASK')
+	bits[28].set_params('IR29', 'UNMASK', 'MASK')
+	bits[29].set_params('IR30', 'UNMASK', 'MASK')
+	bits[30].set_params('IR31', 'UNMASK', 'MASK')
+	bits[31].set_params('IR32', 'UNMASK', 'MASK')
 	pass
 
 
