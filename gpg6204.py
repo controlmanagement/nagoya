@@ -190,7 +190,7 @@ class PencGetStatus_pnStatus*(pyinterface.BitIdentifer):
     bits[9].set_params('EQ', 'disagreement', 'agreement')
     bits[10].set_params('EXLTS', 'OFF', 'ON')
     bits[11].set_params('EQF', 'disagreement', 'agreement')
-    bits[12].set_params('PERR', 'OFF', 'ON') 
+    bits[12].set_params('PERR', 'OFF', 'ON')  
 
 
 
