@@ -24,8 +24,8 @@ LPMTRCALLBACK = ctypes.CFUNCTYPE(ctypes.c_int, ctypes.c_ulong, ctypes.c_ulong)
 
 # PencOpen : fulFlags
 # ------------------
-PENC_FLAG_NORMAL = 
-PENC_FLAG_SHARE = 
+PENC_FLAG_NORMAL = 0x0000
+PENC_FLAG_SHARE = 0x0002
 
 
 # 8: PencSetFilter
@@ -33,8 +33,8 @@ PENC_FLAG_SHARE =
 
 # PencSetFilter : nChannel
 # ------------------
-PENC_IN1_8 = 
-PENC_IN9_16 = 
+PENC_IN1_8 = 0x0100
+PENC_IN9_16 = 0x0200
 
 
 # 27: PencSetEventMask
@@ -42,8 +42,8 @@ PENC_IN9_16 =
 
 # PencSetEventMask : nChannel
 # ------------------
-PENC_EVENT_BOARD = 
-PENC_EVENT_DIO = 
+PENC_EVENT_BOARD = 0x0100
+PENC_EVENT_DIO = 0x0200
 
 
 # RETURN VALUE
