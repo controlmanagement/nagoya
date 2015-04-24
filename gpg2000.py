@@ -299,17 +299,128 @@ class EintIrqMask(pyinterface.Identifer):
 	bits[31].set_params('IR32', 'UNMASK', 'MASK')
 	pass
 
+# 33: DioEintSetEdgeConfig
+# ------------------
+class EintEdgeConfig(pyinterface.Identifer):
+	size = 32
+	bits = [pyinterface.BitIdentiferElement(i) for i in range(size)]
+	del(i)
+	bits[0].set_params('IR1', 'ENABLED', 'UNABLED')
+	bits[1].set_params('IR2', 'ENABLED', 'UNABLED')
+	bits[2].set_params('IR3', 'ENABLED', 'UNABLED')
+	bits[3].set_params('IR4', 'ENABLED', 'UNABLED')
+	bits[4].set_params('IR5', 'ENABLED', 'UNABLED')
+	bits[5].set_params('IR6', 'ENABLED', 'UNABLED')
+	bits[6].set_params('IR7', 'ENABLED', 'UNABLED')
+	bits[7].set_params('IR8', 'ENABLED', 'UNABLED')
+	bits[8].set_params('IR9', 'ENABLED', 'UNABLED')
+	bits[9].set_params('IR10', 'ENABLED', 'UNABLED')
+	bits[10].set_params('IR11', 'ENABLED', 'UNABLED')
+	bits[11].set_params('IR12', 'ENABLED', 'UNABLED')
+	bits[12].set_params('IR13', 'ENABLED', 'UNABLED')
+	bits[13].set_params('IR14', 'ENABLED', 'UNABLED')
+	bits[14].set_params('IR15', 'ENABLED', 'UNABLED')
+	bits[15].set_params('IR16', 'ENABLED', 'UNABLED')
+	bits[16].set_params('IR17', 'ENABLED', 'UNABLED')
+	bits[17].set_params('IR18', 'ENABLED', 'UNABLED')
+	bits[18].set_params('IR19', 'ENABLED', 'UNABLED')
+	bits[19].set_params('IR20', 'ENABLED', 'UNABLED')
+	bits[20].set_params('IR21', 'ENABLED', 'UNABLED')
+	bits[21].set_params('IR22', 'ENABLED', 'UNABLED')
+	bits[22].set_params('IR23', 'ENABLED', 'UNABLED')
+	bits[23].set_params('IR24', 'ENABLED', 'UNABLED')
+	bits[24].set_params('IR25', 'ENABLED', 'UNABLED')
+	bits[25].set_params('IR26', 'ENABLED', 'UNABLED')
+	bits[26].set_params('IR27', 'ENABLED', 'UNABLED')
+	bits[27].set_params('IR28', 'ENABLED', 'UNABLED')
+	bits[28].set_params('IR29', 'ENABLED', 'UNABLED')
+	bits[29].set_params('IR30', 'ENABLED', 'UNABLED')
+	bits[30].set_params('IR31', 'ENABLED', 'UNABLED')
+	bits[31].set_params('IR32', 'ENABLED', 'UNABLED')
+	pass
+
+# 35: DioEintSetIrqMaskEx
+# ------------------
+class IrqMaskEx(pyinterface.Identifer):            ????????????????????????
+	size = 32
+	bits = [pyinterface.BitIdentiferElement(i) for i in range(size)]
+	del(i)
+	bits[0].set_params('IR1', 'UNMASK', 'MASK')
+	bits[1].set_params('IR2', 'UNMASK', 'MASK')
+	bits[2].set_params('IR3', 'UNMASK', 'MASK')
+	bits[3].set_params('IR4', 'UNMASK', 'MASK')
+	bits[4].set_params('IR5', 'UNMASK', 'MASK')
+	bits[5].set_params('IR6', 'UNMASK', 'MASK')
+	bits[6].set_params('IR7', 'UNMASK', 'MASK')
+	bits[7].set_params('IR8', 'UNMASK', 'MASK')
+	bits[8].set_params('IR9', 'UNMASK', 'MASK')
+	bits[9].set_params('IR10', 'UNMASK', 'MASK')
+	bits[10].set_params('IR11', 'UNMASK', 'MASK')
+	bits[11].set_params('IR12', 'UNMASK', 'MASK')
+	bits[12].set_params('IR13', 'UNMASK', 'MASK')
+	bits[13].set_params('IR14', 'UNMASK', 'MASK')
+	bits[14].set_params('IR15', 'UNMASK', 'MASK')
+	bits[15].set_params('IR16', 'UNMASK', 'MASK')
+	bits[16].set_params('IR17', 'UNMASK', 'MASK')
+	bits[17].set_params('IR18', 'UNMASK', 'MASK')
+	bits[18].set_params('IR19', 'UNMASK', 'MASK')
+	bits[19].set_params('IR20', 'UNMASK', 'MASK')
+	bits[20].set_params('IR21', 'UNMASK', 'MASK')
+	bits[21].set_params('IR22', 'UNMASK', 'MASK')
+	bits[22].set_params('IR23', 'UNMASK', 'MASK')
+	bits[23].set_params('IR24', 'UNMASK', 'MASK')
+	bits[24].set_params('IR25', 'UNMASK', 'MASK')
+	bits[25].set_params('IR26', 'UNMASK', 'MASK')
+	bits[26].set_params('IR27', 'UNMASK', 'MASK')
+	bits[27].set_params('IR28', 'UNMASK', 'MASK')
+	bits[28].set_params('IR29', 'UNMASK', 'MASK')
+	bits[29].set_params('IR30', 'UNMASK', 'MASK')
+	bits[30].set_params('IR31', 'UNMASK', 'MASK')
+	bits[31].set_params('IR32', 'UNMASK', 'MASK')
+	pass
+
+# 39: DioEintInputPoint   ???????????????????????
+# ------------------
+class IrqMaskEx(pyinterface.Identifer): 
+	size = 32
+	bits = [pyinterface.BitIdentiferElement(i) for i in range(size)]
+	del(i)
 
 
 
 
 
+# 43: DioEintSetFilterConfig
+# ------------------
+class EintFilterConfig(pyinterface.Identifer):
+	FBIDIO_IRIN1_2_STB1 = pIE('FBIDIO_IRIN1_2_STB1', lib.FBIDIO_IRIN1_2_STB1)
+	pass
 
+class EintFilterConfig(pyinterface.Identifer): ???????????????????????????????????????????????
+	size = 8
+	bits = [pyinterface.BitIdentiferElement(i) for i in range(size)]
+	del(i)
+	bits[0].set_params('', '', '')
+	bits[1].set_params('', '', '')
+	bits[2].set_params('', '', '')
+	bits[3].set_params('', '', '')
+	bits[4].set_params('', '', '')
+	bits[5].set_params('', '', '')
+	bits[6].set_params('', '', '')
+	bits[7].set_params('', '', '')
 
+# 45: DioSetRstinMask
+# ------------------
+class RstinMask(pyinterface.Identifer):
+	FBIDIO_RSTIN_MASK = pIE('FBIDIO_RSTIN_MASK', lib.FBIDIO_RSTIN_MASK)
+	pass
 
-
-
-
+# 51: DioOutputSync
+# ------------------
+class RstinMask(pyinterface.Identifer):
+	FBIDIO_SYNC1 = pIE('FBIDIO_SYNC1', lib.FBIDIO_SYNC1)
+	FBIDIO_SYNC2 = pIE('FBIDIO_SYNC2', lib.FBIDIO_SYNC2)
+	pass
 
 
 # Error Wrapper
