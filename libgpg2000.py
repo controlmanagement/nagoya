@@ -19,23 +19,116 @@ import pyinterface
 # Identifers
 # ==========
 
+FBIDIO_FLAG_SHARE = 1
 
 # 5:DioInputByte
 #===============
 
 #nNo : 
 #---------------
-FBIDIO_IN1_8 = 
-FBIDIO_IN9_16 = 
-FBIDIO_IN17_24 =
-FBIDIO_IN25_32 =
-FBIDIO_IN33_40 =
-FBIDIO_IN41_48 =
-FBIDIO_IN49_56 =
-FBIDIO_IN57_64 =
+FBIDIO_IN1_8 = 0x00000001
+FBIDIO_IN9_16 = 0x00000002
+FBIDIO_IN17_24 = 0x00000004
+FBIDIO_IN25_32 = 0x00000008
+FBIDIO_IN33_40 = 0x00000010
+FBIDIO_IN41_48 = 0x00000020
+FBIDIO_IN49_56 = 0x00000040
+FBIDIO_IN57_64 = 0x00000080
 
 
+# 6: DioInputWord
+#===============
 
+#nNo : 
+#---------------
+FBIDIO_IN1_16 = 0x00000003
+FBIDIO_IN17_32 = 0x0000000c
+FBIDIO_IN33_48 = 0x00000030
+FBIDIO_IN49_64 = 0x000000c0
+
+
+# 7: DioInputDword
+#===============
+
+#nNo : 
+#---------------
+FBIDIO_IN1_32 = 0x0000000f
+FBIDIO_IN33_64 = 0x000000f0
+
+
+# 8: DioOutputByte
+#===============
+
+#nNo : 
+#---------------
+FBIDIO_OUT1_8 = 0x00000100
+FBIDIO_OUT9_16 = 0x00000200
+FBIDIO_OUT17_24 = 0x00000400
+FBIDIO_OUT25_32 = 0x00000800
+FBIDIO_OUT33_40 = 0x00001000
+FBIDIO_OUT41_48 = 0x00002000
+FBIDIO_OUT49_56 = 0x00004000
+FBIDIO_OUT57_64 = 0x00008000
+
+
+# 9: DioOutputWord
+#===============
+
+#nNo : 
+#---------------
+FBIDIO_OUT1_16 = 0x00000300
+FBIDIO_OUT17_32 = 0x00000c00
+FBIDIO_OUT33_48 = 0x00003000
+FBIDIO_OUT49_64 = 0x0000c000
+
+
+# 10: DioOutputDword
+#===============
+
+#nNo : 
+#---------------
+FBIDIO_OUT1_32 = 0x00000f00
+FBIDIO_OUT33_64 = 0x0000f000
+
+
+# 43: DioEintSetFilterConfig
+#===============
+
+#nNo : 
+#---------------
+FBIDIO_IRIN1_2_STB1 0x0000ffff
+
+
+# 45: DioSetRstinMask
+#===============
+
+#ulRstinMask : 
+#---------------
+FBIDIO_RSTIN_MASK = 1
+
+# 51: DioOutputSync
+#===============
+
+#Line : 
+#---------------
+FBIDIO_SYNC1 = 0
+FBIDIO_SYNC2 = 1
+
+
+# RETURN VALUE
+# ============ 
+FBIDIO_ERROR_SUCCESS = 0x00000000
+FBIDIO_ERROR_NOT_DEVICE = 0xC0000001
+FBIDIO_ERROR_NOT_OPEN = 0xC0000002
+FBIDIO_ERROR_INVALID_DEVICE_NUMBER  = 0xC0000003
+FBIDIO_ERROR_ALREADY_OPEN = 0xC0000004
+FBIDIO_ERROR_NOT_SUPPORTED = 0xC0000009
+FBIDIO_ERROR_PARAMETER = 0xC0001021
+FBIDIO_ERROR_INVALID_CALL = 0xC0001002
+FBIDIO_ERROR_USBIO_FAILED = 0xC0001085
+FBIDIO_ERROR_USBIO_TIMEOUT = 0xC0001086
+FBIDIO_ERROR_USBLIB_LOAD_FAILED = 0xC0001087
+FBIDIO_ERROR_DEVICE_HANDLE = 0xFFFFFFFF
 
 
 #================
@@ -54,21 +147,21 @@ else:
 	pyinterface.so_available.append(SO_PATH)
 	
 	_P = ctypes.POINTER
-  _char_p = ctypes.c_char_p
-  _uchar = ctypes.c_ubyte
-  _uchar_p = _P(ctypes.c_ubyte)
-  _ushort = ctypes.c_ushort
-  _ushort_p = _P(ctypes.c_ushort)
-  _int = ctypes.c_int
-  _int_p = _P(ctypes.c_int)
-  _uint = ctypes.c_uint
-  _long = ctypes.c_long
-  _long_p = _P(ctypes.c_long)
-  _ulong = ctypes.c_ulong
-  _ulong_p = _P(ctypes.c_ulong)
-  _float = ctypes.c_float
-  _float_p = _P(ctypes.c_float)
-  _void_p = ctypes.c_void_p
+	_char_p = ctypes.c_char_p
+	_uchar = ctypes.c_ubyte
+	_uchar_p = _P(ctypes.c_ubyte)
+	_ushort = ctypes.c_ushort
+	_ushort_p = _P(ctypes.c_ushort)
+	_int = ctypes.c_int
+	_int_p = _P(ctypes.c_int)
+	_uint = ctypes.c_uint
+	_long = ctypes.c_long
+	_long_p = _P(ctypes.c_long)
+	_ulong = ctypes.c_ulong
+	_ulong_p = _P(ctypes.c_ulong)
+	_float = ctypes.c_float
+	_float_p = _P(ctypes.c_float)
+	_void_p = ctypes.c_void_p
 
 	#int DioOpen(int, unsigned long);
 	#--------------------------------
