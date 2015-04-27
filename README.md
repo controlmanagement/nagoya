@@ -17,7 +17,7 @@ B4
 * libgpg2000.py
 -> 
 * libgpg6204.py
--> 引数 void 問題だけ
+-> とりあえずできた
 * gpg2000.py
 -> 
 * gpg6204.py
