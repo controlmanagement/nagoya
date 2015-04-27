@@ -23,6 +23,13 @@ class PencOpen_fulFlags(pyinterface.Identifer):
 	PENC_FLAG_SHARE = pIE('PENC_FLAG_SHARE', lib.PENC_FLAG_SHARE)
 	pass
 
+# 3: PencReset
+# ------------------
+class PencReset_nChannel(pyinterface.Identifer):
+	PENC_FLAG_NORMAL = pIE('PENC_FLAG_NORMAL', lib.PENC_FLAG_NORMAL)
+	PENC_FLAG_SHARE = pIE('PENC_FLAG_SHARE', lib.PENC_FLAG_SHARE)
+	pass
+
 # 4: PencSetMode
 # ------------------
 class PencSetMode_nMode(pyinterface.BitIdentifer):
@@ -380,4 +387,158 @@ class ErrorGPG7204(pyinterface.ErrorCode):
     _success = PENC_ERROR_SUCCESS
     pass
 
+# ==========================
+# GPG-6204 Python 
+# ==========================
+
+
+
+
+
+# ==========================
+# GPG-7204 Python Controller
+# ==========================
+
+class gpg6204_controller(object):
+    ndev = int()
+    boardid = ''
+    print_log = True
     
+    def __init__(self, ndev=1, nChannel=1, boardid=6204, initialize=True):
+        """
+        boardid = 6204
+        """
+        self.ndev = ndev
+        self.nChannel = nChannel
+        self.boardid = BoardID.verify(boardid)
+        if initialize: self.initialize()
+        return
+
+    def _log(self, msg):
+        if self.print_log:
+            print('Interface GPG6204(%d): %s'%(self.ndev, msg))
+            pass
+        return
+    
+    def _error_check(self, error_no):
+        ErrorGPG6204.check(error_no)
+        return
+     
+    def initialize(self):
+        self.open()
+        return
+    
+    def open(self, fulFlags):
+        """
+        1. PencOpen
+        """
+        self._log('open')
+        fulFlags = PencOpen_fulFlags.verify(fulFlags)
+        ret = lib.PencOpen(self.ndev)
+        self._error_check(ret)
+        return
+
+    def close(self):
+    	"""
+        2. PencClose
+        """
+        self._log('close')
+        ret = lib.PencClose(self.ndev)
+        self._error_check(ret)
+        return
+
+    def reset(self):
+    	"""
+        3. PencReset
+        """
+        self._log('reset')
+        ret = lib.PencReset(self.ndev, self.nChannel)
+        self._error_check(ret)
+        return
+
+    def set_mode(self, nMode, nDirection, nEqual, nLatch):
+    	"""
+        4. PencSetMode
+        """
+        self._log('set_mode')
+        nMode = PencSetMode_nMode.verify(nMode)
+        nDirection = PencSetMode_nDirection.verify(nDirection)
+        nEqual = PencSetMode_nEqual.verify(nEqual)
+        nLatch = PencSetMode_nLatch.verify(nLatch)
+        ret = lib.PencSetMode(self.ndev,self.nChannel,nMode,nDirection,nEqual,nLatch)
+        self._error_check(ret)
+        return
+
+    def get_mode(self, nMode, nDirection, nEqual, nLatch):
+    	"""
+        5. PencGetMode
+        """
+        self._log('get_mode')
+        pnMode = PencGetMode_nMode.verify(nMode)
+        pnDirection = PencGetMode_nDirection.verify(nDirection)
+        pnEqual = PencGetMode_nEqual.verify(nEqual)
+        pnLatch = PencGetMode_nLatch.verify(nLatch)
+        ret = lib.PencGetMode(self.ndev,self.nChannel,nMode,nDirection,nEqual,nLatch)
+        self._error_check(ret)
+        return
+        
+    def set_zmode(self, nZMode):
+    	"""
+        6. PencSetZMode
+        """
+        self._log('set_zmode')
+        nZMode = PencSetZMode_nZMode.verify(nZMode)
+        ret = lib.PencSetZMode(self.ndev,self.nChannel,nZMode)
+        self._error_check(ret)
+        return
+
+    def get_zmode(self, pnZMode):
+    	"""
+        7. PencGetZMode
+        """
+        self._log('get_zmode')
+        pnZMode = PencGetZMode_pnMode.verify(pnZMode)
+        ret = lib.PencGetZMode(self.ndev,self.nChannel,pnZMode)
+        self._error_check(ret)
+        return
+
+    def set_filter(self, ulFilter):
+    	"""
+        8. PencSetFilter
+        """
+        self._log('set_filter')
+        ulFilter = PencSetFilter_ulFilter.verify(ulFilter)
+        ret = lib.PenSetFilter(self.ndev,self.nChannel,ulFilter)
+        self._error_check(ret)
+        return
+
+    def get_filter(self, pulFilter):
+    	"""
+        9. PencGetFilter
+        """
+        self._log('get_filter')
+        pulFilter = PencGetFilter_pulFilter.verify(pulFilter)
+        ret = lib.PenGetFilter(self.ndev,self.nChannel,pulFilter)
+        self._error_check(ret)
+        return
+
+    def enable_count(self, uChSel, nEnable):
+    	"""
+        10. PencEnableCount
+        """
+        self._log('enable_count')
+        uChSel = PencEnableCount_uChSel.verify(uChSel)
+        uEnable = PencEnableCount_uEnable.verify(uEnable)
+        ret = lib.PencEnableCount(self.ndev,uChSel,uEnable)
+        self._error_check(ret)
+        return
+
+
+        
+    
+
+
+
+
+
+
