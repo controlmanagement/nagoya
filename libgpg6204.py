@@ -101,7 +101,7 @@ else:
     _ulong_p = _P(ctypes.c_ulong)
     _ubyte = ctypes.c_ubyte
     _ubyte_p = _P(ctypes.c_ubyte)
-    _void = 
+    _void_p = 
 
     # 1 int PencOpen(int, unsigned long);
     # -------------------
@@ -286,7 +286,7 @@ else:
     # 31 void lpEventProcEx(int, unsigned long, unsigned long);
     # ----------------   
     lpEventProcEx = lib.lpEventProcEx
-    lpEventProcEx.restype = _
+    lpEventProcEx.restype = _void_p
     PencSetEventEx.argtypes = (_int, _ulong, _ulong)
 
 
