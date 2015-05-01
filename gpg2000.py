@@ -13,8 +13,8 @@ pIE = pyinterface.IdentiferElement
 # =================
 
 class BoardID(pyinterface.Identifer):
-    id2724 = pIE('id2724', 2724)
-    pass
+	id2724 = pIE('id2724', 2724)
+	pass
 
 
 # 3: DioInputPoint
@@ -471,8 +471,8 @@ class ErrorGPG2000(pyinterface.ErrorCode):
 	FBIDIO_ERROR_USBLIB_LOAD_FAILED = pIE('FBIDIO_ERROR_USBLIB_LOAD_FAILED', lib.FBIDIO_ERROR_USBLIB_LOAD_FAILED)
 	FBIDIO_ERROR_DEVICE_HANDLE = pIE('FBIDIO_ERROR_DEVICE_HANDLE', lib.FBIDIO_ERROR_DEVICE_HANDLE)
 	
-    _success = FBIDIO_ERROR_SUCCESS
-    pass
+	_success = FBIDIO_ERROR_SUCCESS
+	pass
 
 
 
