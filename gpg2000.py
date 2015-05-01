@@ -17,6 +17,38 @@ class BoardID(pyinterface.Identifer):
     pass
 
 
+# 3: DioInputPoint
+# ------------------
+class InputPoint(pyinterface.Identifer):
+	size = 32
+	bits = [pyinterface.BitIdentiferElement(i) for i in range(size)]
+	del(i)
+	bits[0].set_params('OUT1', 'ENABLED', 'DISABLED')
+	bits[1].set_params('OUT2', 'ENABLED', 'DISABLED')
+	bits[2].set_params('OUT3', 'ENABLED', 'DISABLED')
+	bits[3].set_params('OUT4', 'ENABLED', 'DISABLED')
+	bits[4].set_params('OUT5', 'ENABLED', 'DISABLED')
+	bits[5].set_params('OUT6', 'ENABLED', 'DISABLED')
+	bits[6].set_params('OUT7', 'ENABLED', 'DISABLED')
+	bits[7].set_params('OUT8', 'ENABLED', 'DISABLED')
+	bits[8].set_params('SIG1', 'ENABLED', 'DISABLED')
+	bits[9].set_params('SIG2', 'ENABLED', 'DISABLED')
+	bits[10].set_params('SIG3', 'ENABLED', 'DISABLED')
+	bits[11].set_params('SIG4', 'ENABLED', 'DISABLED')
+	bits[12].set_params('SIG5', 'ENABLED', 'DISABLED')
+	bits[13].set_params('SIG6', 'ENABLED', 'DISABLED')
+	bits[14].set_params('SIG7', 'ENABLED', 'DISABLED')
+	bits[15].set_params('SIG8', 'ENABLED', 'DISABLED')
+	bits[16].set_params('SIG1', 'ENABLED', 'DISABLED')
+	bits[17].set_params('SIG2', 'ENABLED', 'DISABLED')
+	bits[18].set_params('SIG3', 'ENABLED', 'DISABLED')
+	bits[19].set_params('SIG4', 'ENABLED', 'DISABLED')
+	bits[20].set_params('SIG5', 'ENABLED', 'DISABLED')
+	bits[21].set_params('SIG6', 'ENABLED', 'DISABLED')
+	bits[22].set_params('SIG7', 'ENABLED', 'DISABLED')
+	bits[23].set_params('SIG8', 'ENABLED', 'DISABLED')
+	bits[24].set_params('IN', 'ENABLED', 'DISABLED')
+	pass
 
 # 5: DioInputByte
 # ------------------
@@ -80,68 +112,68 @@ class OutputDwordMode(pyinterface.Identifer):
 # ------------------
 class LatchStatus(pyinterface.Identifer):
 	size = 8
-  bits = [pyinterface.BitIdentiferElement(i) for i in range(size)]
-  del(i)
-  bits[0].set_params('PORT0', 'ENABLED', 'DISABLED')
-  bits[1].set_params('PORT1', 'ENABLED', 'DISABLED')
-  bits[2].set_params('PORT2', 'ENABLED', 'DISABLED')
-  bits[3].set_params('PORT3', 'ENABLED', 'DISABLED')
-  bits[4].set_params('PORT4', 'ENABLED', 'DISABLED')
-  bits[5].set_params('PORT5', 'ENABLED', 'DISABLED')
-  bits[6].set_params('PORT6', 'ENABLED', 'DISABLED')
-  bits[7].set_params('PORT7', 'ENABLED', 'DISABLED')
-  pass
+	bits = [pyinterface.BitIdentiferElement(i) for i in range(size)]
+	del(i)
+	bits[0].set_params('PORT0', 'ENABLED', 'DISABLED')
+	bits[1].set_params('PORT1', 'ENABLED', 'DISABLED')
+	bits[2].set_params('PORT2', 'ENABLED', 'DISABLED')
+	bits[3].set_params('PORT3', 'ENABLED', 'DISABLED')
+	bits[4].set_params('PORT4', 'ENABLED', 'DISABLED')
+	bits[5].set_params('PORT5', 'ENABLED', 'DISABLED')
+	bits[6].set_params('PORT6', 'ENABLED', 'DISABLED')
+	bits[7].set_params('PORT7', 'ENABLED', 'DISABLED')
+	pass
 
 # 13: DioGetAckStatus
 # ------------------
 class AckStatus(pyinterface.Identifer):
 	size = 8
-  bits = [pyinterface.BitIdentiferElement(i) for i in range(size)]
-  del(i)
-  bits[0].set_params('IR.IN2', 'HIGH', 'LOW')
-  bits[5].set_params('STB2', 'HIGH', 'LOW')
-  bits[6].set_params('ACKR2', 'HIGH', 'LOW')
-  bits[7].set_params('ACK2', 'HIGH', 'LOW')
-  pass
+	bits = [pyinterface.BitIdentiferElement(i) for i in range(size)]
+	del(i)
+	bits[0].set_params('IR.IN2', 'HIGH', 'LOW')
+	bits[5].set_params('STB2', 'HIGH', 'LOW')
+	bits[6].set_params('ACKR2', 'HIGH', 'LOW')
+	bits[7].set_params('ACK2', 'HIGH', 'LOW')
+	pass
 
 # 14: DioSetAckPulseCommand
 # ------------------
 class AckPulseCommand(pyinterface.Identifer):
 	size = 8
-  bits = [pyinterface.BitIdentiferElement(i) for i in range(size)]
-  del(i)
-  bits[3].set_params('P010', 'HIGH', 'DISABLED')
-  bits[4].set_params('P011', 'LOW', 'DISABLESD')
-  bits[5].set_params('P012', 'LOW_PULSE', 'DISABLED')
-  bits[6].set_params('ACK10', 'HIGH', 'DISABLED')
-  bits[7].set_params('ACK11', 'LOW', 'DISABLED')
-  pass
+	bits = [pyinterface.BitIdentiferElement(i) for i in range(size)]
+	del(i)
+	bits[3].set_params('P010', 'HIGH', 'DISABLED')
+	bits[4].set_params('P011', 'LOW', 'DISABLESD')
+	bits[5].set_params('P012', 'LOW_PULSE', 'DISABLED')
+	bits[6].set_params('ACK10', 'HIGH', 'DISABLED')
+	bits[7].set_params('ACK11', 'LOW', 'DISABLED')
+	pass
 
 # 15: DioGetStbStatus
 # ------------------
 class StbStatus(pyinterface.Identifer):
 	size = 8
-  bits = [pyinterface.BitIdentiferElement(i) for i in range(size)]
-  del(i)
-  bits[0].set_params('IR.IN1', 'HIGH', 'LOW')
-  bits[4].set_params('LF', 'LATCH_ON', 'LATCH_OFF')
-  bits[5].set_params('ACK1', 'HIGH', 'LOW')
-  bits[6].set_params('STBR1', 'HIGH', 'LOW')
-  bits[7].set_params('STB1', 'HIGH', 'LOW')
-  pass
+	bits = [pyinterface.BitIdentiferElement(i) for i in range(size)]
+	del(i)
+	bits[0].set_params('IR.IN1', 'HIGH', 'LOW')
+	bits[4].set_params('LF', 'LATCH_ON', 'LATCH_OFF')
+	bits[5].set_params('ACK1', 'HIGH', 'LOW')
+	bits[6].set_params('STBR1', 'HIGH', 'LOW')
+	bits[7].set_params('STB1', 'HIGH', 'LOW')
+	pass
 
 # 16: DioSetStbPulseCommand
 # ------------------
 class StbPulseStatus(pyinterface.Identifer):
 	size = 8
-  bits = [pyinterface.BitIdentiferElement(i) for i in range(size)]
-  del(i)
-  bits[3].set_params('P020', 'HIGH', 'DISABLED')
-  bits[4].set_params('P021', 'LOW', 'DISABLED')
-  bits[5].set_params('P022', 'LOW_PULSE', 'DISABLED')
-  bits[6].set_params('STB20', 'HIGH', 'DISABLED')
-  bits[7].set_params('STB21', 'LOW', 'DISABLED')
-  pass
+	bits = [pyinterface.BitIdentiferElement(i) for i in range(size)]
+	del(i)
+	bits[3].set_params('P020', 'HIGH', 'DISABLED')
+	bits[4].set_params('P021', 'LOW', 'DISABLED')
+	bits[5].set_params('P022', 'LOW_PULSE', 'DISABLED')
+	bits[6].set_params('STB20', 'HIGH', 'DISABLED')
+	bits[7].set_params('STB21', 'LOW', 'DISABLED')
+	pass
 
 
 # 18: DioSetIrqMask
@@ -460,6 +492,348 @@ class gpg2000(object):
 # ==========================
 # GPG-2000 Python Controller
 # ==========================
+class gpg2000_controller(object):
+	ndev = int()
+	boardid = ''
+	print_log = True
+
+	def __init__(self, ndev=1, boardid=2000, initialize=True):
+		"""
+		boardid = 2000
+		"""
+		self.ndev = ndev
+		self.boardid = BoardID.verify(boardid)
+		if initialize: self.initialize()
+		return
+
+	def _log(self, msg):
+		if self.print_log:
+			print('Interface GPG2000(%d): %s'%(self.ndev, msg))
+			pass
+		return
+        
+	def _error_check(self, error_no):
+		ErrorGPG2000.check(error_no)
+		return
+
+	def initialize(self):
+		self.open()
+		return
+
+
+
+
+	def open(self):
+		"""
+		1. DioOpen
+		"""
+		self._log('open')
+		ret = lib.DioOpen(self.ndev)
+		self._error_check(ret)
+		return
+
+	def close(self):
+		"""
+		2. DioClose
+		"""
+		self._log('close')
+		ret = lib.DioClose(self.ndev)
+		self._error_check(ret)
+		return
+
+	def in_point(self, startnum, num):
+		"""
+		3. DioInputPoint
+		"""
+		self._log('in_point')
+		buffer = ctypes.c_int(0)
+		num = InputPoint(num)
+		ret = lib.DioInputPoint(self.ndev, buffer, startnum, num)
+		self._error_check(ret)
+		return buffer
+
+	def out_point(self, startnum, num):
+		"""
+		4. DioOutputPoint
+		"""
+		self._log('out_point')
+		buffer = ctypes.c_int(0)
+		num = InputPoint(num)
+		ret = lib.DioOutputPoint(self.ndev, buffer, startnum, num)
+		self._error_check(ret)
+		return buffer
+
+	def in_byte(self, no):
+		"""
+		5. DioInputByte
+		"""
+		self._log('in_byte')
+		no = InputByteMode.verify(no)
+		value = ctypes.c_char_p(0)
+		ret = lib.DioInputByte(self.ndev, no, value)
+		self._error_check(ret)
+		return value
+
+	def in_word(self, no):
+		"""
+		6. DioInputWord
+		"""
+		self._log('in_word')
+		no = InputWordMode.verify(no)
+		value = ctypes.c_ushort_p(0)
+		ret = lib.DioInputWord(self.ndev, no, value)
+		self._error_check(ret)
+		return value
+
+	def in_dword(self, no):
+		"""
+		7. DioInputDword
+		"""
+		self._log('in_dword')
+		no = InputDwordMode.verify(no)
+		value = ctypes.c_ulong_p(0)
+		ret = lib.DioInputDword(self.ndev, no, value)
+		self._error_check(ret)
+		return value
+
+	def out_byte(self, no):
+		"""
+		8. DioOutputByte
+		"""
+		self._log('out_byte')
+		no = OutputByteMode.verify(no)
+		value = ctypes.c_char_p(0)
+		ret = lib.DioOutputByte(self.ndev, no, value)
+		self._error_check(ret)
+		return value
+
+	def out_word(self, no):
+		"""
+		9. DioOutputWord
+		"""
+		self._log('out_word')
+		no = OutputWordMode.verify(no)
+		value = ctypes.c_ushort_p(0)
+		ret = lib.DioOutputWord(self.ndev, no, value)
+		self._error_check(ret)
+		return value
+
+	def out_dword(self, no):
+		"""
+		10. DioOutputDword
+		"""
+		self._log('out_dword')
+		no = OutputDwordMode.verify(no)
+		value = ctypes.c_ulong_p(0)
+		ret = lib.DioOutputDword(self.ndev, no, value)
+		self._error_check(ret)
+		return value
+
+	def set_latch(self, status):
+		"""
+		11. DioSetLatchStatus
+		"""
+		self._log('set_latch')
+		status = LatchStatus(status)
+		ret = lib.DioSetLatchStatus(self.ndev, status)
+		self._error_check(ret)
+		return
+
+	def get_latch(self):
+		"""
+		12. DioGetLatchStatus
+		"""
+		self._log('set_latch')
+		status = ctypes.c_char_p(0)
+		status = LatchStatus(status.value)
+		ret = lib.DioGetLatchStatus(self.ndev, status)
+		self._error_check(ret)
+		return status
+
+	def get_ack(self):
+		"""
+		13. DioGetAckStatus
+		"""
+		self._log('get_ack')
+		status = ctypes.c_uchar_p(0)
+		status = AckStatus(status.value)
+		ret = lib.DioGetAckStatus(self.ndev, status)
+		self._error_check(ret)
+		return status
+
+	def set_ack(self, commamd):
+		"""
+		14. DioSetAckPulseCommand
+		"""
+		self._log('set_ack')
+		command = AckPulseCommand(command)
+		ret = lib.DioSetAckPulseCommand(self.ndev, status)
+		self._error_check(ret)
+		return
+
+	def get_stb(self):
+		"""
+		15. DioGetStbStatus
+		"""
+		self._log('get_stb_status')
+		status = ctypes.c_uchar_p(0)
+		status = StbStatus(status.value)
+		ret = lib.DioGetStbStatus(self.ndev, status)
+		self._error_check(ret)
+		return status
+
+	def set_stb(self, command):
+		"""
+		16. DioSetStbPulseCommand
+		"""
+		self._log('set_stb')
+		command = StbPulseStatus(command)
+		ret = lib.DioSetStbPulseCommand(self.ndev, command)
+		self._error_check(ret)
+		return
+
+	def get_reset(self):
+		"""
+		17. DioGetResetInStatus
+		"""
+		self._log('get_reset')
+		status = ctypes.c_uchar_p(0)
+		ret = lib.DioGetResetStatus(self.ndev, status)
+		self._error_check(ret)
+		return status.value
+
+	def set_irq():
+		"""
+		18. DioSetIrqMask
+		"""
+
+
+
+
+
+
+	def ():
+		"""
+		19. DioGetIrqMask
+		"""
+
+
+
+
+
+
+
+	def ():
+		"""
+		20. DioSetIrqConfig
+		"""
+
+
+
+
+
+
+
+	def ():
+		"""
+		21. DioGetIrqConfig
+		"""
+
+
+
+
+
+
+
+	def ():
+		"""
+		22. DioRegistIsr
+		"""
+
+
+
+
+
+
+
+	def ():
+		"""
+		23. DioRegistIsrEx
+		"""
+
+
+
+
+
+
+
+	def ():
+		"""
+		24. DioEintRegistIsr
+		"""
+
+
+
+
+
+
+
+
+	def ():
+		"""
+		25. DioGetDeviceConfig
+		"""
+
+
+
+
+
+
+
+
+	def ():
+		"""
+		26. DioGetDeviceConfigEx
+		"""
+
+
+
+
+
+
+
+
+	def ():
+		"""
+		27. DioCommonGetPciDeviceInfo
+		"""
+
+
+
+
+
+
+
+	def ():
+		"""
+		28. DioSetTimerConfig
+		"""
+
+
+
+
+
+
+
+
+
+	def ():
+		"""
+		29. DioGetTimerConfig
+		"""
+
+
+
 
 
 
