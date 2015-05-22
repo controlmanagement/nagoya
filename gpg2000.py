@@ -413,7 +413,7 @@ class IrqMaskEx(pyinterface.Identifer):            ????????????????????????
 
 # 39: DioEintInputPoint   ???????????????????????
 # ------------------
-class IrqMaskEx(pyinterface.Identifer): 
+class EintInputPoint(pyinterface.Identifer): 
 	size = 32
 	bits = [pyinterface.BitIdentiferElement(i) for i in range(size)]
 	del(i)
@@ -424,11 +424,39 @@ class IrqMaskEx(pyinterface.Identifer):
 
 # 43: DioEintSetFilterConfig
 # ------------------
-class EintFilterConfig(pyinterface.Identifer):
+class EintFilterNo(pyinterface.Identifer):
+	FBIDIO_IN1_8 = pIE('FBIDIO_IN1_8', lib.FBIDIO_IN1_8)
+	FBIDIO_IN9_16 = pIE('FBIDIO_IN9_16', lib.FBIDIO_IN9_16)
+	FBIDIO_IN17_24 = pIE('FBIDIO_IN17_24', lib.FBIDIO_IN17_24)
+	FBIDIO_IN25_32 = pIE('FBIDIO_IN25_32', lib.FBIDIO_IN25_32)
+	FBIDIO_IN33_40 = pIE('FBIDIO_IN33_40', lib.FBIDIO_IN33_40)
+	FBIDIO_IN41_48 = pIE('FBIDIO_IN41_48', lib.FBIDIO_IN41_48)
+	FBIDIO_IN49_56 = pIE('FBIDIO_IN49_56', lib.FBIDIO_IN49_56)
+	FBIDIO_IN57_64 = pIE('FBIDIO_IN57_64', lib.FBIDIO_IN57_64)
 	FBIDIO_IRIN1_2_STB1 = pIE('FBIDIO_IRIN1_2_STB1', lib.FBIDIO_IRIN1_2_STB1)
 	pass
 
 class EintFilterConfig(pyinterface.Identifer): ???????????????????????????????????????????????
+	size = 8
+	bits = [pyinterface.BitIdentiferElement(i) for i in range(size)]
+	del(i)
+	bits[0].set_params('SIG1', 'CUTTING', 'NONE')
+	bits[1].set_params('SIG2', 'CUTTING', 'NONE')
+	bits[2].set_params('SIG3', 'CUTTING', 'NONE')
+	bits[3].set_params('SIG4', 'CUTTING', 'NONE')
+	bits[4].set_params('SIGT', 'CUTTING', 'NONE')
+	bits[5].set_params('SIGR', 'CUTTING', 'NONE')
+	pass
+
+# 45: DioSetRstinMask
+# ------------------
+class RstinMask(pyinterface.Identifer):
+	FBIDIO_RSTIN_MASK = pIE('FBIDIO_RSTIN_MASK', lib.FBIDIO_RSTIN_MASK)
+	pass
+
+# 47: CallBackProc
+# ------------------
+class CallBackProc(pyinterface.Identifer):
 	size = 8
 	bits = [pyinterface.BitIdentiferElement(i) for i in range(size)]
 	del(i)
@@ -441,11 +469,14 @@ class EintFilterConfig(pyinterface.Identifer): ?????????????????????????????????
 	bits[6].set_params('', '', '')
 	bits[7].set_params('', '', '')
 
-# 45: DioSetRstinMask
-# ------------------
-class RstinMask(pyinterface.Identifer):
-	FBIDIO_RSTIN_MASK = pIE('FBIDIO_RSTIN_MASK', lib.FBIDIO_RSTIN_MASK)
-	pass
+
+
+
+
+
+
+
+
 
 # 51: DioOutputSync
 # ------------------
@@ -454,6 +485,15 @@ class RstinMask(pyinterface.Identifer):
 	FBIDIO_SYNC2 = pIE('FBIDIO_SYNC2', lib.FBIDIO_SYNC2)
 	pass
 
+class OutputSync(pyinterface.Identifer):
+	size = 8
+	bits = [pyinterface.BitIdentiferElement(i) for i in range(size)]
+	del(i)
+	bits[0].set_params('DI1', 'ENABLE', 'DISABLE')
+	bits[1].set_params('DI2', 'ENABLE', 'DISABLE')
+	bits[2].set_params('DI3', 'ENABLE', 'DISABLE')
+	bits[3].set_params('DI4', 'ENABLE', 'DISABLE')
+	pass
 
 # Error Wrapper
 #===================
@@ -569,7 +609,7 @@ class gpg2000_controller(object):
 		"""
 		self._log('in_byte')
 		no = InputByteMode.verify(no)
-		value = ctypes.c_char_p(0)
+		value = ctypes.c_char(0)
 		ret = lib.DioInputByte(self.ndev, no, value)
 		self._error_check(ret)
 		return value
@@ -580,7 +620,7 @@ class gpg2000_controller(object):
 		"""
 		self._log('in_word')
 		no = InputWordMode.verify(no)
-		value = ctypes.c_ushort_p(0)
+		value = ctypes.c_ushort(0)
 		ret = lib.DioInputWord(self.ndev, no, value)
 		self._error_check(ret)
 		return value
@@ -591,7 +631,7 @@ class gpg2000_controller(object):
 		"""
 		self._log('in_dword')
 		no = InputDwordMode.verify(no)
-		value = ctypes.c_ulong_p(0)
+		value = ctypes.c_ulong(0)
 		ret = lib.DioInputDword(self.ndev, no, value)
 		self._error_check(ret)
 		return value
@@ -602,7 +642,7 @@ class gpg2000_controller(object):
 		"""
 		self._log('out_byte')
 		no = OutputByteMode.verify(no)
-		value = ctypes.c_char_p(0)
+		value = ctypes.c_char(0)
 		ret = lib.DioOutputByte(self.ndev, no, value)
 		self._error_check(ret)
 		return value
@@ -613,7 +653,7 @@ class gpg2000_controller(object):
 		"""
 		self._log('out_word')
 		no = OutputWordMode.verify(no)
-		value = ctypes.c_ushort_p(0)
+		value = ctypes.c_ushort(0)
 		ret = lib.DioOutputWord(self.ndev, no, value)
 		self._error_check(ret)
 		return value
@@ -624,7 +664,7 @@ class gpg2000_controller(object):
 		"""
 		self._log('out_dword')
 		no = OutputDwordMode.verify(no)
-		value = ctypes.c_ulong_p(0)
+		value = ctypes.c_ulong(0)
 		ret = lib.DioOutputDword(self.ndev, no, value)
 		self._error_check(ret)
 		return value
@@ -644,7 +684,7 @@ class gpg2000_controller(object):
 		12. DioGetLatchStatus
 		"""
 		self._log('set_latch')
-		status = ctypes.c_char_p(0)
+		status = ctypes.c_char(0)
 		status = LatchStatus(status.value)
 		ret = lib.DioGetLatchStatus(self.ndev, status)
 		self._error_check(ret)
@@ -655,7 +695,7 @@ class gpg2000_controller(object):
 		13. DioGetAckStatus
 		"""
 		self._log('get_ack')
-		status = ctypes.c_uchar_p(0)
+		status = ctypes.c_uchar(0)
 		status = AckStatus(status.value)
 		ret = lib.DioGetAckStatus(self.ndev, status)
 		self._error_check(ret)
@@ -676,7 +716,7 @@ class gpg2000_controller(object):
 		15. DioGetStbStatus
 		"""
 		self._log('get_stb_status')
-		status = ctypes.c_uchar_p(0)
+		status = ctypes.c_uchar(0)
 		status = StbStatus(status.value)
 		ret = lib.DioGetStbStatus(self.ndev, status)
 		self._error_check(ret)
@@ -697,58 +737,58 @@ class gpg2000_controller(object):
 		17. DioGetResetInStatus
 		"""
 		self._log('get_reset')
-		status = ctypes.c_uchar_p(0)
+		status = ctypes.c_uchar(0)
 		ret = lib.DioGetResetStatus(self.ndev, status)
 		self._error_check(ret)
 		return status.value
 
-	def set_irq():
+	def set_irq_mask(self, mask):
 		"""
 		18. DioSetIrqMask
 		"""
+		self._log('set_irq_mask')
+		mask = IrqMask(mask)
+		ret = lib.DioSetIrqMask(self.ndev, mask)
+		self._error_check(ret)
+		return
 
-
-
-
-
-
-	def ():
+	def get_irq_mask(self):
 		"""
 		19. DioGetIrqMask
 		"""
+		self._log('get_irq_mask')
+		mask = ctypes.c_uchar(0)
+		mask = IrqMask(mask.value)
+		ret = lib.DioGetIrqMask(self.ndev, mask)
+		self._error_check(ret)
+		return mask
 
-
-
-
-
-
-
-	def ():
+	def set_irq_config(self, cofig):
 		"""
 		20. DioSetIrqConfig
 		"""
+		self._log('set_irq_config')
+		config = IrqConfig(config)
+		ret = lib.DioSetIrqConfig(self.ndev, config)
+		self._error_check(ret)
+		return
 
-
-
-
-
-
-
-	def ():
+	def get_irq_config(self):
 		"""
 		21. DioGetIrqConfig
 		"""
+		self._log('get_irq_config')
+		config = ctypes.c_uchar(0)
+		config = IrqConfig(config.value)
+		ret = lib.DioGetIrqConfig(self.ndev, config)
+		self._error_check(ret)
+		return config
 
-
-
-
-
-
-
-	def ():
+	def regist_isr():
 		"""
 		22. DioRegistIsr
 		"""
+		self._log('regist_isr')
 
 
 
@@ -756,10 +796,12 @@ class gpg2000_controller(object):
 
 
 
-	def ():
+
+	def regist_isr_ex():
 		"""
 		23. DioRegistIsrEx
 		"""
+		self._log('regist_isr_ex')
 
 
 
@@ -767,10 +809,12 @@ class gpg2000_controller(object):
 
 
 
-	def ():
+	def eint_regist_isr(self, ):
 		"""
 		24. DioEintRegistIsr
 		"""
+		self._log('eint_regist_isr')
+		ret = 
 
 
 
@@ -779,46 +823,271 @@ class gpg2000_controller(object):
 
 
 
-	def ():
+	def get_device_config(self):
 		"""
 		25. DioGetDeviceConfig
 		"""
+		self._log('get_device_config')
+		device_config = ctypes.c_ulong(0)
+		device_config = DeviceConfig(device_config.value)
+		ret = lib.DioGetDeviceConfig(self.ndev, device_config)
+		return device_config
 
-
-
-
-
-
-
-
-	def ():
+	def get_device_config_ex(self):
 		"""
 		26. DioGetDeviceConfigEx
 		"""
+		self._log('get_device_config_ex')
+		device_config = ctypes.c_ulong(0)
+		device_config = DeviceConfig(device_config.value)
+		device_config_ex = ctypes.c_ulong(0)
+		device_config_ex = DeviceConfigEx(device_config_ex.value)
+		ret = lib.DioGetDeviceConfigEx(self.ndev, device_config, device_config_ex)
+		return device_config, device_config_ex
 
-
-
-
-
-
-
-
-	def ():
+	def get_device_info(self):
 		"""
 		27. DioCommonGetPciDeviceInfo
 		"""
+		self._log('get_device_info')
+		device_id = ctypes.c_ushort(0)
+		vendor_id = ctypes.c_ushort(0)
+		class_code = ctypes.c_ulong(0)
+		revision_id = ctypes.c_uchar(0)
+		base_iddress0 = ctypes.c_ulong(0)
+		base_iddress1 = ctypes.c_ulong(0)
+		base_iddress2 = ctypes.c_ulong(0)
+		base_iddress3 = ctypes.c_ulong(0)
+		base_iddress4 = ctypes.c_ulong(0)
+		base_iddress5 = ctypes.c_ulong(0)
+		system_id = ctypes.c_ushort(0)
+		system_vendor_id = ctypes.c_ushort(0)
+		interrput_line = ctypes.c_uchar(0)
+		board_id = ctypes.c_ulong(0)
+		ret = lib.DioCommonGetPciDeviceInfo(self.ndev, device_id, vendor_id, class_code, revision_id, base_iddress0, base_iddress1, base_iddress2, base_iddress3, base_iddress4, base_iddres5, system_id, system_vendor_id, interrput_id, board_id)
+		return device_id, vendor_id, class_code, revision_id, base_iddress0, base_iddress1, base_iddress2, base_iddress3, base_iddress4, base_iddres5, system_id, system_vendor_id, interrput_id, board_id
 
-
-
-
-
-
-
-	def ():
+	def set_timer_config(self, timer_config):
 		"""
 		28. DioSetTimerConfig
 		"""
+		self._log('set_timer_config')
+		timer_config = TimerConfig(timer_config)
+		ret = lib.DioSetTimerConfig(self.ndev, timer_config)
+		return
 
+	def get_timer_config(self):
+		"""
+		29. DioGetTimerConfig
+		"""
+		self._log('get_timer_config')
+		timer_config = ctypes.c_uchar(0)
+		timer_config = TimerConfig(timer_config)
+		ret = lib.DioGetTimerConfig(self.ndev, timer_config)
+		return timer_config
+
+	def get_timer_count(self):
+		"""
+		30. DioGetTimerCount
+		"""
+		self._log('get_timer_count')
+		timer_count = ctypes.c_uchar(0)
+		timer_count = TimerCount(timer_count)
+		ret = lib.DioGetTimerCount(self.ndev, timer_count)
+		return timer_count
+
+	def eint_set_irq_mask(self, irqmask):
+		"""
+		31. DioEintSetIrqMask
+		"""
+		self._log('eint_set_irq_mask')
+		irqmask = EintIrqMask(irqmask)
+		ret = lib.DioEintSetIrqMask(self.ndev, irqmask)
+		return
+
+	def eint_get_irq_mask(self):
+		"""
+		32. DioEintGetIrqMask
+		"""
+		self._log('eint_get_irq_mask')
+		irqmask = ctypes.c_ulong(0)
+		irqmask = EintIrqMask(irqmask)
+		ret = lib.DioEintGetIrqMadk(self.ndev, irqmask)
+		return irqmask
+
+	def set_edge_config(self, fall_config, rise_config):
+		"""
+		33. DioEintSetEdgeConfig
+		"""
+		self._log('set_edge_config')
+		fall_config = EintEdgeConfig(fall_config)
+		rise_config = EintEdgeConfig(rise_config)
+		ret = lib.DioEintSetEdgeConfig(self.ndev, fall_config, rise_config)
+		return
+
+	def get_edge_config(self):
+		"""
+		34. DioEintGetEdgeConfig
+		"""
+		self._log('get_edge_config')
+		fall_config = ctypes.c_ulong(0)
+		rise_config = ctypes.c_ulong(0)
+		fall_config = EintEdgeConfig(fall_config)
+		rise_config = EintEdgeConfig(rise_config)
+		ret = lib.DioEintGetEdgeConfig(self.ndev, fall_config, rise_config)
+		return fall_config, rise_config
+
+	def set_irq_mask_ex(self, no, irqmask):
+		"""
+		35. DioEintSetIrqMaskEx
+		"""
+		self._log('set_irq_mask_ex')
+		no = InputDwordMode(no)
+		irqmask = IrqMaskEx(irqmask)
+		ret = lib.DioEintSetIrqMask(self.ndev, no, irqmask)
+		return
+
+	def get_irq_mask_ex(self, no):
+		"""
+		36. DioEintGetIrqMaskEx
+		"""
+		self._log('get_irq_mask_ex')
+		no = InputDwordMode(no)
+		irqmask = ctypes.c_ulong(0)
+		irqmask = IrqMaskEx(irqmask)
+		ret = lib.DioEintGetIrqMaskEx(self.ndev, no, irqmask)
+		return irqmask
+
+	def set_edge_config_ex(self, no, fall_config, rise_config):
+		"""
+		37. DioEintSetEdgeConfigEx
+		"""
+		self._log('set_edge_config_ex')
+		no = InputDwordMode(no)
+		fall_config = EintEdgeConfig(fall_config)
+		rise_config = EintEdgeConfig(rise_config)
+		ret = lib.DioEintSetEdgeConfigEx(self.ndev, no, fall_config, rise_config)
+		return
+
+	def get_edge_config_ex(self, no):
+		"""
+		38. DioEintGetEdgeConfigEx
+		"""
+		self._log('get_edge_config_ex')
+		no = InputDwordMode(no)
+		fall_config = ctypes.c_ulong(0)
+		rise_config = ctypes.c_ulong(0)
+		fall_config = EintEdgeConfig(fall_config)
+		rise_config = EintEdgeConfig(rise_config)
+		ret = lib.DioEintSetEdgeConfigEx(self.ndev, no, fall_config, rise_config)
+		return fall_config, rise_config
+
+	def eint_in_point(self, startnum, num):
+		"""
+		39. DioEintInputPoint
+		"""
+		self._log('eint_in_point')
+		buffer = ctypes.c_int(0)
+		buffer = EintInputPoint(buffer)
+		ret = lib.DioEintInputPoint(self.ndev, buffer, startnum, num)
+		return buffer
+
+	def eint_in_byte(self, no):
+		"""
+		40. DioEintInputByte
+		"""
+		self._log('eint_in_byte')
+		no = InputByteMode(no)
+		fall_value = ctypes.c_uchar(0)
+		rise_value = ctypes.c_uchar(0)
+		ret = lib.DioEintInputByte(self.ndev, no, fall_value, rise_value)
+		return fall_value, rise_value
+
+	def eint_in_word(self, no):
+		"""
+		41. DioEintInputWord
+		"""
+		self._log('eint_in_word')
+		no = InputWordMode(no)
+		fall_value = ctypes.c_ushort(0)
+		rise_value = ctypes.c_ushort(0)
+		ret = lib.DioEintInputWord(self.ndev, no, fall_value, rise_value)
+		return fall_value, rise_value
+
+	def eint_in_dword(self, no):
+		"""
+		42. DioEintInputDword
+		"""
+		self._log('eint_in_dword')
+		no = InputDwordMode(no)
+		fall_value = ctypes.c_ulong(0)
+		rise_value = ctypes.c_ulong(0)
+		ret = lib.DioEintInputDword(self.ndev, no, fall_value, rise_value)
+		return fall_value, rise_value
+
+	def set_filter(self, no, config):
+		"""
+		43. DioEintSetFilterConfig
+		"""
+		self._log('set_filter')
+		no = EintFilterNo(no)
+		config = EintFilterConfig(config)
+		ret = lib.DioEintSetFilterConfig(self.ndev, no, config)
+		return
+
+	def get_filter(self, no):
+		"""
+		44. DioEintGetFilterConfig
+		"""
+		self._log('get_filter')
+		no = EintFilterNo(no)
+		config = ctypes.c_int(0)
+		config = EintFilterConfig(config)
+		ret = lib.DioEintGetFilterConfig(self.ndev, no, config)
+		return config
+
+	def set_rstin_mask(self, mask):
+		"""
+		45. DioSetRstinMask
+		"""
+		self._log('set_rstin_mask')
+		mask = RstinMask(mask)
+		ret = lib.DioSetRstinMask(self.ndev, mask)
+		return
+
+	def get_rstin_mask(self):
+		"""
+		46. DioGetRstinMask
+		"""
+		self._log('get_rstin')
+		mask = ctypes.c_ulong(0)
+		mask = RstinMask(mask)
+		ret = lib.DioGetRstinMask(self.ndev, mask)
+		return mask
+
+	def call_back(self, event, num):
+		"""
+		47. CallBackProc
+		"""
+		self._log('call_back')
+		event = CallBackProc(event)
+		ret = lib.CallBackProc(self.ndev, event, num)
+		return
+
+	def call_back_ex():
+		"""
+		48. CallBackProcEx
+		"""
+
+
+
+
+
+
+	def eint_call_back():
+		"""
+		49. EintCallBackProc
+		"""
 
 
 
@@ -829,7 +1098,7 @@ class gpg2000_controller(object):
 
 	def ():
 		"""
-		29. DioGetTimerConfig
+		50. BGCallBackProc
 		"""
 
 
@@ -837,3 +1106,13 @@ class gpg2000_controller(object):
 
 
 
+	def out_put_sync(self, line, up_edge, down_edge):
+		"""
+		51. DioOutputSync
+		"""
+		self._log('out_put_sync')
+		line = RstinMask(line)
+		up_edge = OutputSync(up_edge)
+		down_edge = OutputSync(down_edge)
+		ret = lib.DioOutputSync(self.ndev, line, up_edge, down_edge)
+		return
