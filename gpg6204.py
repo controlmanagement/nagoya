@@ -294,6 +294,21 @@ class ErrorGPG7204(pyinterface.ErrorCode):
 # GPG-6204 Python 
 # ==========================
 
+class gpg7204(object):
+    def __init__(self, ndev=1, remote=False):
+        initialize = not remote
+        self.ctrl = gpg6204_controller(ndev, initialize=initialize)
+        pass
+
+    def start
+
+
+
+
+
+
+
+
 
 
 
@@ -304,15 +319,15 @@ class ErrorGPG7204(pyinterface.ErrorCode):
 
 class gpg6204_controller(object):
     ndev = int()
+
     boardid = ''
     print_log = True
     
-    def __init__(self, ndev=1, nChannel=1, boardid=6204, initialize=True):
+    def __init__(self, ndev=1, boardid=6204, initialize=True):
         """
         boardid = 6204
         """
         self.ndev = ndev
-        self.nChannel = nChannel
         self.boardid = BoardID.verify(boardid)
         if initialize: self.initialize()
         return
@@ -350,80 +365,93 @@ class gpg6204_controller(object):
         self._error_check(ret)
         return
 
-    def reset(self):
+    def reset(self, nChannel):
     	"""
         3. PencReset
         """
         self._log('reset')
-        ret = lib.PencReset(self.ndev, self.nChannel)
+        nChannel = PencReset_nChannel.verify(nChannel)
+        ret = lib.PencReset(self.ndev, nChannel)
         self._error_check(ret)
         return
 
-    def set_mode(self, nMode, nDirection, nEqual, nLatch):
+    def set_mode(self, nChannel, nMode, nDirection, nEqual, nLatch):
     	"""
         4. PencSetMode
         """
         self._log('set_mode')
+        nChannel = PencSetMode_nChannel.verify(nChannel)
         nMode = PencSetMode_nMode.verify(nMode)
         nDirection = PencSetMode_nDirection.verify(nDirection)
         nEqual = PencSetMode_nEqual.verify(nEqual)
         nLatch = PencSetMode_nLatch.verify(nLatch)
-        ret = lib.PencSetMode(self.ndev, self.nChannel, nMode, nDirection, nEqual, nLatch)
+        ret = lib.PencSetMode(self.ndev, nChannel, nMode, nDirection, nEqual, nLatch)
         self._error_check(ret)
         return
 
-    def get_mode(self, nMode, nDirection, nEqual, nLatch):
+    def get_mode(self, nChannel):
     	"""
         5. PencGetMode
         """
         self._log('get_mode')
+        nChannel = PencSetMode_nChannel.verify(nChannel)
+        pnMode = ctypes.c_int(0)
+        pnDirection = ctypes.c_int(0)
+        pnEqual = ctypes.c_int(0)
+        pnLatch = ctypes.c_int(0)
+        ret = lib.PencGetMode(self.ndev, nChannel, nMode, nDirection, nEqual, nLatch)
+        self._error_check(ret)
         pnMode = PencGetMode_nMode.verify(nMode)
         pnDirection = PencGetMode_nDirection.verify(nDirection)
         pnEqual = PencGetMode_nEqual.verify(nEqual)
         pnLatch = PencGetMode_nLatch.verify(nLatch)
-        ret = lib.PencGetMode(self.ndev, self.nChannel, nMode, nDirection, nEqual, nLatch)
-        self._error_check(ret)
-        return
+        return [pnMode, pnDirection, pnEqual, pnLatch]
         
-    def set_zmode(self, nZMode):
+    def set_zmode(self, nChannel, nZMode):
     	"""
         6. PencSetZMode
         """
         self._log('set_zmode')
+        nChannel = PencSetMode_nChannel.verify(nChannel)
         nZMode = PencSetZMode_nZMode.verify(nZMode)
-        ret = lib.PencSetZMode(self.ndev, self.nChannel, nZMode)
+        ret = lib.PencSetZMode(self.ndev, nChannel, nZMode)
         self._error_check(ret)
         return
 
-    def get_zmode(self, pnZMode):
+    def get_zmode(self, nChannel):
     	"""
         7. PencGetZMode
         """
         self._log('get_zmode')
-        pnZMode = PencGetZMode_pnMode.verify(pnZMode)
-        ret = lib.PencGetZMode(self.ndev, self.nChannel, pnZMode)
+        nChannel = PencSetMode_nChannel.verify(nChannel)
+        pnZMode = ctypes.c_int(0)
+        ret = lib.PencGetZMode(self.ndev, nChannel, pnZMode)
         self._error_check(ret)
-        return
+        pnZMode = PencGetZMode_pnMode.verify(pnZMode)
+        return pnZMode
 
-    def set_filter(self, ulFilter):
+    def set_filter(self, nChannel, ulFilter):
     	"""
         8. PencSetFilter
         """
         self._log('set_filter')
+        nChannel = PencSetMode_nChannel.verify(nChannel)
         ulFilter = PencSetFilter_ulFilter.verify(ulFilter)
-        ret = lib.PenSetFilter(self.ndev, self.nChannel, ulFilter)
+        ret = lib.PenSetFilter(self.ndev, nChannel, ulFilter)
         self._error_check(ret)
         return
 
-    def get_filter(self, pulFilter):
+    def get_filter(self, nChannel):
     	"""
         9. PencGetFilter
         """  
         self._log('get_filter')
-        pulFilter = PencGetFilter_pulFilter.verify(pulFilter)
-        ret = lib.PenGetFilter(self.ndev, self.nChannel, pulFilter)
+        nChannel = PencSetMode_nChannel.verify(nChannel)
+        pulFilter = ctypes.c_int(0)
+        ret = lib.PenGetFilter(self.ndev, nChannel, pulFilter)
         self._error_check(ret)
-        return
+        pulFilter = PencGetFilter_pulFilter.verify(pulFilter)
+        return pulFilter
 
     def enable_count(self, uChSel, nEnable):
     	"""
@@ -446,35 +474,39 @@ class gpg6204_controller(object):
         self._error_check(ret)
         return
     
-    def get_reset_in_mask(self, pbResetInMask):
+    def get_reset_in_mask(self):
     	"""
         12. PencGetResetInMask
         """
         self._log('get_reset_in_mask')
-        pbResetInMask = PencGetResetInMask_pbResetInMask.verify(pbResetInMask)
+        pbResetInMask = ctypes.c_ulong(0)
         ret = lib.PencGetResetInMask(self.ndev, pbResetInMask)
-        self._error_check(ret)
-        return
+        self._error_check(ret)    
+        pbResetInMask = PencGetResetInMask_pbResetInMask.verify(pbResetInMask)
+        return pbResetInMask
     
-    def set_counter(self, ulCounter):
+    def set_counter(self, nChannel, ulCounter):
     	"""
         13. PencSetCounter
         """
         self._log('set_counter')
+        nChannel = PencSetMode_nChannel.verify(nChannel)
         ulCounter = PencSetCounter_ulCounter.verify(ulCounter)
-        ret = lib.PencSetCounter(self.ndev, self.nChannel, ulCounter)
+        ret = lib.PencSetCounter(self.ndev, nChannel, ulCounter)
         self._error_check(ret)
         return
     
-    def get_counter(self, pulCounter):
+    def get_counter(self, nChannel):
     	"""
         14. PencGetCounter
         """
         self._log('get_counter')
-        pulCounter = PencGetCounter_pulCounter.verify(pulCounter)
-        ret = lib.PencGetCounter(self.ndev, self.nChannel, pulCounter)
+        nChannel = PencSetMode_nChannel.verify(nChannel)
+        pulCounter = ctypes.c_ulong(0)
+        ret = lib.PencGetCounter(self.ndev, nChannel, pulCounter)
         self._error_check(ret)
-        return
+        pulCounter = PencGetCounter_pulCounter.verify(pulCounter)
+        return pulCounter
         
     def set_counter_ex(self, nChSel, pulCounter):
     	"""
@@ -486,45 +518,52 @@ class gpg6204_controller(object):
         self._error_check(ret)
         return
     
-    def get_counter_ex(self, nChSel, pulCounter):
+    def get_counter_ex(self, nChSel):
     	"""
         16. PencGetCounterEx
         """
         self._log('get_counter_ex')
-        pulCounter = PencGetCounterEx_pulCounter.verify(pulCounter)
-        ret = lib.PencGetCounterEx(self.ndev, self.nChannel, pulCounter)
+        nChSel = PencGetCounterEx_nChSel.verify(nChSel)
+        pulCounter = ctypes.c_ulong(0)
+        ret = lib.PencGetCounterEx(self.ndev, nChSel, pulCounter)
         self._error_check(ret)
-        return
+        pulCounter = PencGetCounterEx_pulCounter.verify(pulCounter)
+        return pulCounter
 
-    def set_comparator(self, ulComparator):
+    def set_comparator(self, nChannel, ulComparator):
     	"""
         17. PencSetComaparator
         """
         self._log('set_comparator')
+        nChannel = PencSetMode_nChannel.verify(nChannel)
         ulComparator = PencSetComparator_ulComparator.verify(ulComparator)
-        ret = lib.PencSetComaparator(self.ndev, self.nChannel, ulComparator)
+        ret = lib.PencSetComaparator(self.ndev, nChannel, ulComparator)
         self._error_check(ret)
         return
 
-    def get_comparator(self, pulComparator):
+    def get_comparator(self, nChannel):
     	"""
         18. PencGetComparator
         """
         self._log('get_comparator')
-        pulComparator = PencGetComparator_pulComparator.verify(pulComparator)
-        ret = lib.PencGetComparator(self.ndev, self.nChannel, pulComparator)
+        nChannel = PencSetMode_nChannel.verify(nChannel)
+        pulComparator = ctypes.c_ulong(0)
+        ret = lib.PencGetComparator(self.ndev, nChannel, pulComparator)
         self._error_check(ret)
-        return
+        pulComparator = PencGetComparator_pulComparator.verify(pulComparator)
+        return pulComparator
        
-    def get_status(self, pnStatus):
+    def get_status(self, nChannel):
     	"""
         19. PencGetStatus
         """
         self._log('get_status')
-        pnStatus = PencGetStatus_pnStatus.verify(pnStatus)
-        ret = lib.PencGetStatus(self.ndev, self.nChannel, pnStatus)
+        nChannel = PencSetMode_nChannel.verify(nChannel)
+        pnStatus = ctypes.c_int(0)
+        ret = lib.PencGetStatus(self.ndev, nChannel, pnStatus)
         self._error_check(ret)
-        return
+        pnStatus = PencGetStatus_pnStatus.verify(pnStatus)
+        return pnStatus
        
     def get_status_ex(self, nChSel, pulCounter, pulStatus):
     	"""
@@ -532,31 +571,35 @@ class gpg6204_controller(object):
         """
         self._log('get_status_ex')
         nChSel = PencGetStatusEx_nChSel.verify(nChSel)
+        pulCounter = ctypes.c_ulong(0)
+        pulStatus = ctypes.c_ulong(0)
+        ret = lib.PencGetStatusEx(self.ndev, nChSel, pulCounter, pulStatus)
+        self._error_check(ret)
         pulCounter = PencGetStatusEx_pulCounter.verify(pulCounter)
         pulStatus = PencGetStatusEx_pulStatus.verify(pulStatus)
-        ret = lib.PencGetStatusEx(self.ndev, nChSel, pulCounter)
-        self._error_check(ret)
-        return
+        return [pulCounter, pulStatus]
      
-    def get_reset_in_status(self, pbResetInStatus):
+    def get_reset_in_status(self):
     	"""
         21. PencGetResetInStatus
         """
         self._log('get_reset_in_status')
-        pbResetInStatus = PencGetResetInStatus_pbResetInStatus.verify(pbResetInStatus)
+        pbResetInStatus = ctypes.c_ubyte(0)
         ret = lib.PencGetResetInStatus(self.ndev, pbResetInStatus)
         self._error_check(ret)
-        return
+        pbResetInStatus = PencGetResetInStatus_pbResetInStatus.verify(pbResetInStatus)
+        return pbResetInStatus
     
-    def input_di(self, pulValue):
+    def input_di(self):
     	"""
         22. PencInputDI
         """
         self._log('input_di')
-        pulValue = PencInputDI_pulValue.verify(pulValue)
+        pulValue = ctypes.c_ulong(0)
         ret = lib.PencInputDI(self.ndev, pulValue)
         self._error_check(ret)
-        return
+        pulValue = PencInputDI_pulValue.verify(pulValue)
+        return pulValue
     
     def output_do(self, ulValue):
     	"""
@@ -578,47 +621,53 @@ class gpg6204_controller(object):
         self._error_check(ret)
         return
     
-    def get_timer_config(self, pucTimerConfigValue):
+    def get_timer_config(self):
     	"""
         25. PencGetTimerConfig
         """
         self._log('get_timer_config')
-        pucTimerConfigValue = PencGetTimerConfig_pucTimerConfigValue.verify(pucTimerConfigValue)
+        pucTimerConfigValue = ctypes.c_ubyte(0)
         ret = lib.PencGetTimerConfig(self.ndev, pucTimerConfigValue)
         self._error_check(ret)
-        return
+        pucTimerConfigValue = PencGetTimerConfig_pucTimerConfigValue.verify(pucTimerConfigValue)
+        return　pucTimerConfigValue
     
-    def get_timer_count(self, pucTimerCount):
+    def get_timer_count(self):
     	"""
         26. PencGetTimerCount
         """
         self._log('get_timer_count')
-        pucTimerCount = PencGetTimerCount_pucTimerCount.verify(pucTimerCount)
+        pucTimerCount = ctypes.c_ubyte(0)
         ret = lib.PencGetTimerCount(self.ndev, pucTimerCount)
         self._error_check(ret)
-        return
+        pucTimerCount = PencGetTimerCount_pucTimerCount.verify(pucTimerCount)
+        return pucTimerCount
     
-    def set_event_mask(self, nEventMask, nTimerMask):
+    def set_event_mask(self, nChannel, nEventMask, nTimerMask):
     	"""
         27. PencSetEventMask
         """
         self._log('set_event_mask')
+        nChannel = PencSetMode_nChannel.verify(nChannel)
         nEventMask = PencSetEventMask_nEventMask.verify(nEventMask)
         nTimerMask = PencSetEventMask_nTimerMask.verify(nTimerMask)
-        ret = lib.PencSetEventMask(self.ndev, self.nChannel, nEventMask, nTimerMask)
+        ret = lib.PencSetEventMask(self.ndev, nChannel, nEventMask, nTimerMask)
         self._error_check(ret)
         return
 
-    def get_event_mask(self, pnEventMask, pnTimerMask):
+    def get_event_mask(self, nChannel):
     	"""
         28. PencGetEventMask
         """
         self._log('get_event_mask')
+        nChannel = PencSetMode_nChannel.verify(nChannel)
+        pnEventMask = ctypes.c_int(0)
+        pucTimerMask = ctypes.c_int(0)
+        ret = lib.PencGetEventMask(self.ndev, nChannel, pnEventMask, pnTimerMask)
+        self._error_check(ret)
         pnEventMask = PencGetEventMask_pnEventMask.verify(pnEventMask)
         pnTimerMask = PencGetEventMask_pnTimerMask.verify(pnTimerMask)
-        ret = lib.PencGetEventMask(self.ndev, self.nChannel, pnEventMask, pnTimerMask)
-        self._error_check(ret)
-        return
+        return [pnEventMask, pnTimerMask]
     
     def set_event_ex(self, ipEventProEx, ulUser):
     	"""
