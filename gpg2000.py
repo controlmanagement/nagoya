@@ -264,31 +264,31 @@ class DeviceConfigEx(pyinterface.Identifer):
 	bits[26].set_params('DGFILTER', 'ENABLED', 'DISABLED')
 	pass
 
-# 28: DioSetTimerConfig  ???????????????????????????????????????????????????????
+# 28: DioSetTimerConfig
 # ------------------
 class TimerConfig(pyinterface.Identifer):
 	size = 8
 	bits = [pyinterface.BitIdentiferElement(i) for i in range(size)]
 	del(i)
-	bits[0].set_params('CYCLE', '', '')
-	bits[1].set_params('CYCLE', '', '')
-	bits[2].set_params('CYCLE', '', '')
-	bits[3].set_params('CYCLE', '', '')
-	bits[4].set_params('BASE_CYCLE', '', '')
-	bits[5].set_params('BASE_CYCLE', '', '')
-	bits[6].set_params('BASE_CYCLE', '', '')
+	bits[0].set_params('BIT', 'ON', 'OFF')
+	bits[1].set_params('BIT', 'ON', 'OFF')
+	bits[2].set_params('BIT', 'ON', 'OFF')
+	bits[3].set_params('BIT', 'ON', 'OFF')
+	bits[4].set_params('BIT', 'ON', 'OFF')
+	bits[5].set_params('BIT', 'ON', 'OFF')
+	bits[6].set_params('BIT', 'ON', 'OFF')
 	pass
 
-# 30: DioGetTimerCount   ????????????????????????????
+# 30: DioGetTimerCount
 # ------------------
 class TimerCount(pyinterface.Identifer):
 	size = 8
 	bits = [pyinterface.BitIdentiferElement(i) for i in range(size)]
 	del(i)
-	bits[0].set_params('CYCLE', '', '')
-	bits[1].set_params('CYCLE', '', '')
-	bits[2].set_params('CYCLE', '', '')
-	bits[3].set_params('CYCLE', '', '')
+	bits[0].set_params('CTL1', 'ON', 'OFF')
+	bits[1].set_params('CTL2', 'ON', 'OFF')
+	bits[2].set_params('CTL3', 'ON', 'OFF')
+	bits[3].set_params('CTL4', 'ON', 'OFF')
 	pass
 
 # 31: DioEintSetIrqMask
@@ -373,7 +373,7 @@ class EintEdgeConfig(pyinterface.Identifer):
 
 # 35: DioEintSetIrqMaskEx
 # ------------------
-class IrqMaskEx(pyinterface.Identifer):            ????????????????????????
+class IrqMaskEx(pyinterface.Identifer):
 	size = 32
 	bits = [pyinterface.BitIdentiferElement(i) for i in range(size)]
 	del(i)
@@ -422,31 +422,6 @@ class EintInputPoint(pyinterface.Identifer):
 
 
 
-# 43: DioEintSetFilterConfig
-# ------------------
-class EintFilterNo(pyinterface.Identifer):
-	FBIDIO_IN1_8 = pIE('FBIDIO_IN1_8', lib.FBIDIO_IN1_8)
-	FBIDIO_IN9_16 = pIE('FBIDIO_IN9_16', lib.FBIDIO_IN9_16)
-	FBIDIO_IN17_24 = pIE('FBIDIO_IN17_24', lib.FBIDIO_IN17_24)
-	FBIDIO_IN25_32 = pIE('FBIDIO_IN25_32', lib.FBIDIO_IN25_32)
-	FBIDIO_IN33_40 = pIE('FBIDIO_IN33_40', lib.FBIDIO_IN33_40)
-	FBIDIO_IN41_48 = pIE('FBIDIO_IN41_48', lib.FBIDIO_IN41_48)
-	FBIDIO_IN49_56 = pIE('FBIDIO_IN49_56', lib.FBIDIO_IN49_56)
-	FBIDIO_IN57_64 = pIE('FBIDIO_IN57_64', lib.FBIDIO_IN57_64)
-	FBIDIO_IRIN1_2_STB1 = pIE('FBIDIO_IRIN1_2_STB1', lib.FBIDIO_IRIN1_2_STB1)
-	pass
-
-class EintFilterConfig(pyinterface.Identifer): ???????????????????????????????????????????????
-	size = 8
-	bits = [pyinterface.BitIdentiferElement(i) for i in range(size)]
-	del(i)
-	bits[0].set_params('SIG1', 'CUTTING', 'NONE')
-	bits[1].set_params('SIG2', 'CUTTING', 'NONE')
-	bits[2].set_params('SIG3', 'CUTTING', 'NONE')
-	bits[3].set_params('SIG4', 'CUTTING', 'NONE')
-	bits[4].set_params('SIGT', 'CUTTING', 'NONE')
-	bits[5].set_params('SIGR', 'CUTTING', 'NONE')
-	pass
 
 # 45: DioSetRstinMask
 # ------------------
@@ -460,23 +435,13 @@ class CallBackProc(pyinterface.Identifer):
 	size = 8
 	bits = [pyinterface.BitIdentiferElement(i) for i in range(size)]
 	del(i)
-	bits[0].set_params('', '', '')
-	bits[1].set_params('', '', '')
-	bits[2].set_params('', '', '')
-	bits[3].set_params('', '', '')
-	bits[4].set_params('', '', '')
-	bits[5].set_params('', '', '')
-	bits[6].set_params('', '', '')
-	bits[7].set_params('', '', '')
-
-
-
-
-
-
-
-
-
+	bits[0].set_params('SIG1', 'CUTTING', 'NONE')
+	bits[1].set_params('SIG2', 'CUTTING', 'NONE')
+	bits[2].set_params('SIG3', 'CUTTING', 'NONE')
+	bits[3].set_params('SIG4', 'CUTTING', 'NONE')
+	bits[4].set_params('SIGT', 'CUTTING', 'NONE')
+	bits[5].set_params('SIGR', 'CUTTING', 'NONE')
+	pass
 
 # 51: DioOutputSync
 # ------------------
@@ -520,6 +485,101 @@ class ErrorGPG2000(pyinterface.ErrorCode):
 # GPG-2000 Python
 # ==========================
 class gpg2000(object):
+	def _init_(self, ndev=1, remote=False):
+		initialize = not remote
+		self.ctrl = gpg2000_controller(ndev, initialize=initialize)
+		pass
+
+
+
+	def start(self, speed, low_speed=5, acc=100, dec=100, sspeed=0):
+		
+		
+		
+		
+		return
+
+
+
+
+	def stop(self):
+		self.ctrl.~~~~~~~~
+		
+		
+		return
+
+
+
+
+
+	def change_speed(self, ):
+		
+		
+		
+		
+		return
+
+
+
+
+	def move(self, ):
+		
+		
+		
+		
+		return
+
+
+
+
+	def move_with_lock(self, ):
+		
+		
+		
+		
+		return
+
+
+
+
+	def move_org(self, ):
+    	
+    	
+    	
+    	
+		return
+
+
+
+
+    def set_org(self):
+    	
+    	
+    	
+		return
+
+
+
+
+	def get_position(self):
+		
+		
+		
+		
+		return
+
+
+
+	def di_check(self):
+		
+		
+		
+		return
+
+
+
+	def do_output(self, ):
+
 
 
 
@@ -784,44 +844,29 @@ class gpg2000_controller(object):
 		self._error_check(ret)
 		return config
 
-	def regist_isr():
+	def regist_isr(self, userdata=None, callbackproc):
 		"""
 		22. DioRegistIsr
 		"""
 		self._log('regist_isr')
+		ret = lib.DioRegistIsr(self.ndev, userdata, callbackproc)
+		return
 
-
-
-
-
-
-
-
-	def regist_isr_ex():
+	def regist_isr_ex(self, userdata, callbackprocex):
 		"""
 		23. DioRegistIsrEx
 		"""
 		self._log('regist_isr_ex')
+		ret = lib.DioRegistIsrEx(self.ndev, userdata, callbackprocex)
+		return
 
-
-
-
-
-
-
-	def eint_regist_isr(self, ):
+	def eint_regist_isr(self, userdata, eintcallbackproc):
 		"""
 		24. DioEintRegistIsr
 		"""
 		self._log('eint_regist_isr')
-		ret = 
-
-
-
-
-
-
-
+		ret = lib.DioEintRegistIsr(self.ndev, userdata, eintcallbackproc)
+		return
 
 	def get_device_config(self):
 		"""
@@ -843,7 +888,7 @@ class gpg2000_controller(object):
 		device_config_ex = ctypes.c_ulong(0)
 		device_config_ex = DeviceConfigEx(device_config_ex.value)
 		ret = lib.DioGetDeviceConfigEx(self.ndev, device_config, device_config_ex)
-		return device_config, device_config_ex
+		return [device_config, device_config_ex]
 
 	def get_device_info(self):
 		"""
@@ -865,7 +910,7 @@ class gpg2000_controller(object):
 		interrput_line = ctypes.c_uchar(0)
 		board_id = ctypes.c_ulong(0)
 		ret = lib.DioCommonGetPciDeviceInfo(self.ndev, device_id, vendor_id, class_code, revision_id, base_iddress0, base_iddress1, base_iddress2, base_iddress3, base_iddress4, base_iddres5, system_id, system_vendor_id, interrput_id, board_id)
-		return device_id, vendor_id, class_code, revision_id, base_iddress0, base_iddress1, base_iddress2, base_iddress3, base_iddress4, base_iddres5, system_id, system_vendor_id, interrput_id, board_id
+		return [device_id, vendor_id, class_code, revision_id, base_iddress0, base_iddress1, base_iddress2, base_iddress3, base_iddress4, base_iddres5, system_id, system_vendor_id, interrput_id, board_id]
 
 	def set_timer_config(self, timer_config):
 		"""
@@ -935,7 +980,7 @@ class gpg2000_controller(object):
 		fall_config = EintEdgeConfig(fall_config)
 		rise_config = EintEdgeConfig(rise_config)
 		ret = lib.DioEintGetEdgeConfig(self.ndev, fall_config, rise_config)
-		return fall_config, rise_config
+		return [fall_config, rise_config]
 
 	def set_irq_mask_ex(self, no, irqmask):
 		"""
@@ -980,7 +1025,7 @@ class gpg2000_controller(object):
 		fall_config = EintEdgeConfig(fall_config)
 		rise_config = EintEdgeConfig(rise_config)
 		ret = lib.DioEintSetEdgeConfigEx(self.ndev, no, fall_config, rise_config)
-		return fall_config, rise_config
+		return [fall_config, rise_config]
 
 	def eint_in_point(self, startnum, num):
 		"""
@@ -1001,7 +1046,7 @@ class gpg2000_controller(object):
 		fall_value = ctypes.c_uchar(0)
 		rise_value = ctypes.c_uchar(0)
 		ret = lib.DioEintInputByte(self.ndev, no, fall_value, rise_value)
-		return fall_value, rise_value
+		return [fall_value, rise_value]
 
 	def eint_in_word(self, no):
 		"""
@@ -1012,7 +1057,7 @@ class gpg2000_controller(object):
 		fall_value = ctypes.c_ushort(0)
 		rise_value = ctypes.c_ushort(0)
 		ret = lib.DioEintInputWord(self.ndev, no, fall_value, rise_value)
-		return fall_value, rise_value
+		return [fall_value, rise_value]
 
 	def eint_in_dword(self, no):
 		"""
@@ -1023,17 +1068,7 @@ class gpg2000_controller(object):
 		fall_value = ctypes.c_ulong(0)
 		rise_value = ctypes.c_ulong(0)
 		ret = lib.DioEintInputDword(self.ndev, no, fall_value, rise_value)
-		return fall_value, rise_value
-
-	def set_filter(self, no, config):
-		"""
-		43. DioEintSetFilterConfig
-		"""
-		self._log('set_filter')
-		no = EintFilterNo(no)
-		config = EintFilterConfig(config)
-		ret = lib.DioEintSetFilterConfig(self.ndev, no, config)
-		return
+		return [fall_value, rise_value]
 
 	def get_filter(self, no):
 		"""
