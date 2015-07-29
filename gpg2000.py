@@ -490,83 +490,12 @@ class gpg2000(object):
 		self.ctrl = gpg2000_controller(ndev, initialize=initialize)
 		pass
 
-
-
-	def start(self, speed, low_speed=5, acc=100, dec=100, sspeed=0):
-		
-		
-		
-		
-		return
-
-
-
-
-	def stop(self):
-		self.ctrl.~~~~~~~~
-		
-		
-		return
-
-
-
-
-
-	def change_speed(self, ):
-		
-		
-		
-		
-		return
-
-
-
-
-	def move(self, ):
-		
-		
-		
-		
-		return
-
-
-
-
-	def move_with_lock(self, ):
-		
-		
-		
-		
-		return
-
-
-
-
-	def move_org(self, ):
-    	
-    	
-    	
-    	
-		return
-
-
-
-
-    def set_org(self):
-    	
-    	
-    	
-		return
-
-
-
-
 	def get_position(self):
+		ret = self.ctrl.
 		
 		
 		
-		
-		return
+		return ret
 
 
 
@@ -578,14 +507,9 @@ class gpg2000(object):
 
 
 
-	def do_output(self, ):
-
-
-
-
-
-
-
+	def do_output(self, buffer, startnum, num):
+		self.ctrl.out_point(buffer, startnum, num)
+		return
 
 
 
@@ -652,12 +576,11 @@ class gpg2000_controller(object):
 		self._error_check(ret)
 		return buffer
 
-	def out_point(self, startnum, num):
+	def out_point(self, buffer, startnum, num):
 		"""
 		4. DioOutputPoint
 		"""
 		self._log('out_point')
-		buffer = ctypes.c_int(0)
 		num = InputPoint(num)
 		ret = lib.DioOutputPoint(self.ndev, buffer, startnum, num)
 		self._error_check(ret)
@@ -1131,7 +1054,7 @@ class gpg2000_controller(object):
 
 
 
-	def ():
+	def bg_call_back():
 		"""
 		50. BGCallBackProc
 		"""
