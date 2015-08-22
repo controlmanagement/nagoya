@@ -411,18 +411,6 @@ class IrqMaskEx(pyinterface.Identifer):
 	bits[31].set_params('IR32', 'UNMASK', 'MASK')
 	pass
 
-# 39: DioEintInputPoint   ???????????????????????
-# ------------------
-class EintInputPoint(pyinterface.Identifer): 
-	size = 32
-	bits = [pyinterface.BitIdentiferElement(i) for i in range(size)]
-	del(i)
-
-
-
-
-
-
 # 45: DioSetRstinMask
 # ------------------
 class RstinMask(pyinterface.Identifer):
@@ -441,6 +429,46 @@ class CallBackProc(pyinterface.Identifer):
 	bits[3].set_params('SIG4', 'CUTTING', 'NONE')
 	bits[4].set_params('SIGT', 'CUTTING', 'NONE')
 	bits[5].set_params('SIGR', 'CUTTING', 'NONE')
+	pass
+
+# 48: CallBackProcEx
+# ------------------
+class CallBackProcEx(pyinterface.Identifer):
+	size = 32
+	bits = [pyinterface.BitIdentiferElement(i) for i in range(size)]
+	del(i)
+	bits[0].set_params('IR1', 'EDGE_ON', 'EDGE_OFF')
+	bits[1].set_params('IR2', 'EDGE_ON', 'EDGE_OFF')
+	bits[2].set_params('IR3', 'EDGE_ON', 'EDGE_OFF')
+	bits[3].set_params('IR4', 'EDGE_ON', 'EDGE_OFF')
+	bits[4].set_params('IR5', 'EDGE_ON', 'EDGE_OFF')
+	bits[5].set_params('IR6', 'EDGE_ON', 'EDGE_OFF')
+	bits[6].set_params('IR7', 'EDGE_ON', 'EDGE_OFF')
+	bits[7].set_params('IR8', 'EDGE_ON', 'EDGE_OFF')
+	bits[8].set_params('IR9', 'EDGE_ON', 'EDGE_OFF')
+	bits[9].set_params('IR10', 'EDGE_ON', 'EDGE_OFF')
+	bits[10].set_params('IR11', 'EDGE_ON', 'EDGE_OFF')
+	bits[11].set_params('IR12', 'EDGE_ON', 'EDGE_OFF')
+	bits[12].set_params('IR13', 'EDGE_ON', 'EDGE_OFF')
+	bits[13].set_params('IR14', 'EDGE_ON', 'EDGE_OFF')
+	bits[14].set_params('IR15', 'EDGE_ON', 'EDGE_OFF')
+	bits[15].set_params('IR16', 'EDGE_ON', 'EDGE_OFF')
+	bits[16].set_params('IR17', 'EDGE_ON', 'EDGE_OFF')
+	bits[17].set_params('IR18', 'EDGE_ON', 'EDGE_OFF')
+	bits[18].set_params('IR19', 'EDGE_ON', 'EDGE_OFF')
+	bits[19].set_params('IR20', 'EDGE_ON', 'EDGE_OFF')
+	bits[20].set_params('IR21', 'EDGE_ON', 'EDGE_OFF')
+	bits[21].set_params('IR22', 'EDGE_ON', 'EDGE_OFF')
+	bits[22].set_params('IR23', 'EDGE_ON', 'EDGE_OFF')
+	bits[23].set_params('IR24', 'EDGE_ON', 'EDGE_OFF')
+	bits[24].set_params('IR25', 'EDGE_ON', 'EDGE_OFF')
+	bits[25].set_params('IR26', 'EDGE_ON', 'EDGE_OFF')
+	bits[26].set_params('IR27', 'EDGE_ON', 'EDGE_OFF')
+	bits[27].set_params('IR28', 'EDGE_ON', 'EDGE_OFF')
+	bits[28].set_params('IR29', 'EDGE_ON', 'EDGE_OFF')
+	bits[29].set_params('IR30', 'EDGE_ON', 'EDGE_OFF')
+	bits[30].set_params('IR31', 'EDGE_ON', 'EDGE_OFF')
+	bits[31].set_params('IR32', 'EDGE_ON', 'EDGE_OFF')
 	pass
 
 # 51: DioOutputSync
@@ -490,22 +518,9 @@ class gpg2000(object):
 		self.ctrl = gpg2000_controller(ndev, initialize=initialize)
 		pass
 
-	def get_position(self):
-		ret = self.ctrl.
-		
-		
-		
+	def di_check(self, start_num, num):
+		ret = self.ctrl.in_point(start_num, num)
 		return ret
-
-
-
-	def di_check(self):
-		
-		
-		
-		return
-
-
 
 	def do_output(self, buffer, startnum, num):
 		self.ctrl.out_point(buffer, startnum, num)
@@ -956,7 +971,6 @@ class gpg2000_controller(object):
 		"""
 		self._log('eint_in_point')
 		buffer = ctypes.c_int(0)
-		buffer = EintInputPoint(buffer)
 		ret = lib.DioEintInputPoint(self.ndev, buffer, startnum, num)
 		return buffer
 
@@ -1023,46 +1037,42 @@ class gpg2000_controller(object):
 		ret = lib.DioGetRstinMask(self.ndev, mask)
 		return mask
 
-	def call_back(self, event, num):
+	def call_back(self, userdata, event):
 		"""
 		47. CallBackProc
 		"""
 		self._log('call_back')
 		event = CallBackProc(event)
-		ret = lib.CallBackProc(self.ndev, event, num)
+		ret = lib.CallBackProc(userdata, event, self.ndev)
 		return
 
-	def call_back_ex():
+	def call_back_ex(self, userdata, event, fall_event, rise_event):
 		"""
 		48. CallBackProcEx
 		"""
+		self._log('call_back_ex')
+		event = CallBackProc(event)
+		fall_event = CallBackProcEx(fall_event)
+		rise_event = CallBackProcEx(rise_event)
+		ret = lib.CallBackProcEx(userdata, event, fall_event, rise_event, self.ndev)
+		return
 
-
-
-
-
-
-	def eint_call_back():
+	def eint_call_back(self, userdata):
 		"""
 		49. EintCallBackProc
 		"""
+		self._log('eint_call_back')
+		buff = ctypes.c_ulong(0)
+		ret = lib.EintCallBackProc(userdata, buff, self.ndev)
+		return
 
-
-
-
-
-
-
-
-	def bg_call_back():
+	def bg_call_back(self):
 		"""
 		50. BGCallBackProc
 		"""
-
-
-
-
-
+		self.log('bg_call_back')
+		ret = lib.BGCallBackProc(self.ndev)
+		return
 
 	def out_put_sync(self, line, up_edge, down_edge):
 		"""
