@@ -634,7 +634,7 @@ class gpg2000_controller(object):
 		self._error_check(ret)
 		return value
 
-	def out_byte(self, no):
+	def out_byte(self, no, value):
 		"""
 		8. DioOutputByte
 		"""
@@ -645,7 +645,7 @@ class gpg2000_controller(object):
 		self._error_check(ret)
 		return value
 
-	def out_word(self, no):
+	def out_word(self, no, value):
 		"""
 		9. DioOutputWord
 		"""
@@ -656,7 +656,7 @@ class gpg2000_controller(object):
 		self._error_check(ret)
 		return value
 
-	def out_dword(self, no):
+	def out_dword(self, no, value):
 		"""
 		10. DioOutputDword
 		"""
