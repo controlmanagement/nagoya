@@ -260,9 +260,9 @@ class PencSetEventMask_nChannel(pyinterface.BitIdentifer):
 # Error Wrapper
 # =============
 class ErrorGPG7204(pyinterface.ErrorCode):
-	PENC_ERROR_SUCCESS = pIE('PENC_ERROR_SUCCESS', lib.PENC_ERROR_SUCCESS)
-	PENC_ERROR_NOT_DEVICE = pIE('PENC_ERROR_NOT_DEVICE', lib.PENC_ERROR_NOT_DEVICE)
-    PENC_ERROR_NOT_OPEN = pIE('PENC_ERROR_NOT_OPEN',lib.PENC_ERROR_NOT_OPEN)
+    PENC_ERROR_SUCCESS = pIE('PENC_ERROR_SUCCESS', lib.PENC_ERROR_SUCCESS)
+    PENC_ERROR_NOT_DEVICE = pIE('PENC_ERROR_NOT_DEVICE', lib.PENC_ERROR_NOT_DEVICE)
+    PENC_ERROR_NOT_OPEN = pIE('PENC_ERROR_NOT_OPEN', lib.PENC_ERROR_NOT_OPEN)
     PENC_ERROR_INVALID_DEVICE_NUMBER = pIE('PENC_ERROR_INVALID_DEVICE_NUMBER',lib.PENC_ERROR_INVALID_DEVICE_NUMBER)
     PENC_ERROR_ALREADY_OPEN = pIE('PENC_ERROR_ALREADY_OPEN',lib.PENC_ERROR_ALREADY_OPEN)
     PENC_ERROR_NOT_SUPPORTED = pIE('PENC_ERROR_NOT_SUPPORTED',lib.PENC_ERROR_NOT_SUPPORTED)
@@ -294,14 +294,26 @@ class ErrorGPG7204(pyinterface.ErrorCode):
 # GPG-6204 Python 
 # ==========================
 
-class gpg7204(object):
+class gpg6204(object):
     def __init__(self, ndev=1, remote=False):
         initialize = not remote
         self.ctrl = gpg6204_controller(ndev, initialize=initialize)
         pass
 
-    def start
+    def get_position(nChannel):
+        ret = self.ctrl.get_counter(self, nChannel)
+        return ret
 
+    def di_check(self):
+        ret = self.ctrl.input_di()
+        return ret
+
+    def do_output(self, ch, output_time=100):
+        self.ctrl.output_do('OUT%d'%ch)
+        if output_time==0: return
+        time.sleep(output_time/1000.)
+        self.ctrl.output_do(0)
+        return
 
 
 
@@ -621,6 +633,7 @@ class gpg6204_controller(object):
         self._error_check(ret)
         return
     
+    
     def get_timer_config(self):
     	"""
         25. PencGetTimerConfig
@@ -630,8 +643,9 @@ class gpg6204_controller(object):
         ret = lib.PencGetTimerConfig(self.ndev, pucTimerConfigValue)
         self._error_check(ret)
         pucTimerConfigValue = PencGetTimerConfig_pucTimerConfigValue.verify(pucTimerConfigValue)
-        return　pucTimerConfigValue
+        return pucTimerConfigValue
     
+
     def get_timer_count(self):
     	"""
         26. PencGetTimerCount
@@ -688,18 +702,19 @@ class gpg6204_controller(object):
         ret = lib.PencKillEvent(self.ndev)
         self._error_check(ret)
         return
-
-    def lp_event_proc_ex(self, ulEvent, ulUser):
-    	"""
-        31. lpEventProcEx
+        
         """
+    def lp_event_proc_ex(self, ulEvent, ulUser):
+        ""
+        31. lpEventProcEx
+        ""
         self._log('lp_event_proc_ex')
         ulEvent = lpEventProcEx_ulEvent.verify(ulEvent)
         ulUser = lpEventProcEx_ulUser.verify(ulUser)
         ret = lib.lpEventProcEx(self.nChannel, ulEvent, ulUser)
         self._error_check(ret)
         return
-
+        """
     
 
 
