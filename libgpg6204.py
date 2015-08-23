@@ -13,7 +13,7 @@ import pyinterface
 
 # function pointer
 # ----------------
-LPMTRCALLBACK = ctypes.CFUNCTYPE(ctypes.c_int, ctypes.c_ulong, ctypes.c_ulong)
+LPPENCCALLBACKEX = ctypes.CFUNCTYPE(ctypes.c_int, ctypes.c_ulong, ctypes.c_ulong)
 
 # ==========
 # Identifers
@@ -101,13 +101,13 @@ else:
     _ulong_p = _P(ctypes.c_ulong)
     _ubyte = ctypes.c_ubyte
     _ubyte_p = _P(ctypes.c_ubyte)
-    _void_p = 
+     
 
     # 1 int PencOpen(int, unsigned long);
     # -------------------
     PencOpen = lib.PencOpen
     PencOpen.restype = _uint
-    PencOpen.argtypes = (_int,　_ulong)
+    PencOpen.argtypes = (_int, _ulong)
 
     # 2 int PencClose(int);
     # ----------------
@@ -283,11 +283,14 @@ else:
     PencKillEvent.restype = _uint
     PencKillEvent.argtypes = (_int,)    
 
+    
     # 31 void lpEventProcEx(int, unsigned long, unsigned long);
     # ----------------   
-    lpEventProcEx = lib.lpEventProcEx
-    lpEventProcEx.restype = _void_p
-    PencSetEventEx.argtypes = (_int, _ulong, _ulong)
+    
+    #lpEventProcEx = lib.lpEventProcEx
+    #lpEventProcEx.restype = _void_p
+    #lpEventProcEx.argtypes = (_int, _ulong, _ulong)
+
 
 
 
