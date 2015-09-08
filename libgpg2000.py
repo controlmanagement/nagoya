@@ -10,10 +10,25 @@ import pyinterface
 # Structures
 # ==========
 
+class CallBackProc(pyinterface.Structure):
+    _fields_ = [('ulUserData', ctypes.c_ulong),
+                ('bEvent', ctypes.c_ubyte),
+                ('nDeviceNum', ctypes.c_int)]
 
+class CallBackProcEx(pyinterface.Structure):
+    _fields_ = [('ulUserData', ctypes.c_ulong),
+                ('bEvent', ctypes.c_ubyte),
+                ('ulFallEdgeEvent', ctypes.c_ulong),
+                ('ulRiseEdgeEvent', ctypes.c_ulong),
+                ('nDeviceNum', ctypes.c_int)]
 
+class EintCallBackProc(pyinterface.Structure):
+    _fields_ = [('ulUserData', ctypes.c_ulong),
+                ('*pEventBuff', ctypes.c_ulong),
+                ('nDeviceNum', ctypes.c_int)]
 
-
+class BGCallBackProc(pyinterface.Structure):
+    _fields_ = [('nDeviceNum', ctypes.c_ushort)]
 
 # ==========
 # Identifers
@@ -96,7 +111,7 @@ FBIDIO_OUT33_64 = 0x0000f000
 
 #nNo : 
 #---------------
-FBIDIO_IRIN1_2_STB1 0x0000ffff
+FBIDIO_IRIN1_2_STB1 = 0x0000ffff
 
 
 # 45: DioSetRstinMask
@@ -137,7 +152,7 @@ FBIDIO_ERROR_DEVICE_HANDLE = 0xFFFFFFFF
 
 SO_DIR = '/usr/lib'
 SO_NAME = 'libgpg2000.so'
-SO_PATH = os.path.jpin(SO_DIR,SO_NAME)
+SO_PATH = os.path.join(SO_DIR,SO_NAME)
 
 try:
 	lib = ctypes.cdll.LoadLibrary(SO_PATH)
@@ -166,25 +181,25 @@ else:
 	#int DioOpen(int, unsigned long);
 	#--------------------------------
 	DioOpen = lib.DioOpen
-	DioOpen.restype = _unit
+	DioOpen.restype = _uint
 	DioOpen.argtypes = (_int, _ulong)
 	
 	#int DioClose(int);
 	#--------------------------------
 	DioClose = lib.DioClose
-	DioClose.restype = _unit
-	DioClose.argtypes = (_int)
+	DioClose.restype = _uint
+	DioClose.argtypes = (_int,)
 	
 	#int DioInputPoint(int, int*, unsigned long, unsigned long);
 	#---------------------------------
 	DioInputPoint = lib.DioInputPoint
-	DioInputPoint.restype = _unit
+	DioInputPoint.restype = _uint
 	DioInputPoint.argtypes = (_int, _int_p, _ulong, _ulong)
 	
 	#int DioOutputPoint(int, int*, unsigned long, unsigned long);
 	#---------------------------------
 	DioOutputPoint = lib.DioOutputPoint
-	DioOutputPoint.restype = _unit
+	DioOutputPoint.restype = _uint
 	DioOutputPoint.argtypes = (_int, _int, _ulong, _ulong)
 	
 	#int DioInputByte(int, int, unsigned char*);
@@ -220,7 +235,7 @@ else:
 	#int DioOutputDword(int, int, unsigned long);
 	#----------------------------------
 	DioOutputDword = lib.DioOutputDword
-	DioOutputDword.restype = _unit
+	DioOutputDword.restype = _uint
 	DioOutputDword.argtypes = (_int, _int, _ulong)
 	
 	#int DioSetLatchStatus(int, unsigned char);
@@ -239,11 +254,11 @@ else:
 	#----------------------------------
 	DioGetAckStatus = lib.DioGetAckStatus
 	DioGetAckStatus.restype = _uint
-	DioGetACkStatus.argtypes = (_int, _uchar_p)
+	DioGetAckStatus.argtypes = (_int, _uchar_p)
 	
 	#int DioSetAckPulseCommand(int, unsigned char);
 	#----------------------------------
-	DioSetAckPulseCommand = lib.DioSetACkPulseCommand
+	DioSetAckPulseCommand = lib.DioSetAckPulseCommand
 	DioSetAckPulseCommand.restype = _uint
 	DioSetAckPulseCommand.argtypes = (_int, _uchar)
 	
@@ -281,7 +296,7 @@ else:
 	#----------------------------------
 	DioSetIrqConfig = lib.DioSetIrqConfig
 	DioSetIrqConfig.restype = _uint
-	DiosetIrqConfig.argtypes = (_int, _uchar)
+	DioSetIrqConfig.argtypes = (_int, _uchar)
 	
 	#int DioGetIrqConfig(int, unsigned char*);
 	#----------------------------------
@@ -291,21 +306,21 @@ else:
 	
 	#int DioRegistIsr(int, unsigned long, PDIOCALLBACK);
 	#----------------------------------
-	DioRegistIrq = lib.DioRegistIrq
-	DioRegistIrq.restype = _uint
-	DioRegistIrq.argtypes = (_int, _ulong, _P(PDIOCALLBACK))
+	DioRegistIsr = lib.DioRegistIsr
+	DioRegistIsr.restype = _uint
+	DioRegistIsr.argtypes = (_int, _ulong, _P(CallBackProc))
 	
 	#int DioRegistIsrEx(int, unsigned long, PDIOCALLBACKEX);
 	#----------------------------------
 	DioRegistIsrEx = lib.DioRegistIsrEx
 	DioRegistIsrEx.restype = _uint
-	DioRegistIsrEx.argtypes = (_int, _ulong, _P(PDIOCALLBACKEX))
+	DioRegistIsrEx.argtypes = (_int, _ulong, _P(CallBackProcEx))
 	
 	#int DioEintRegistIsr(int, unsigned long, PDIOEINTCALLBACK);
 	#----------------------------------
 	DioEintRegistIsr = lib.DioEintRegistIsr
 	DioEintRegistIsr.restype = _uint
-	DioEintRegistIsr.argtypes = (_int, _ulong, _P(DIOEINTCALLBACK))
+	DioEintRegistIsr.argtypes = (_int, _ulong, _P(EintCallBackProc))
 	
 	#int DioGetDeviceConfig(int, unsigned long*);
 	#----------------------------------
@@ -321,9 +336,9 @@ else:
 	
 	#int DioCommonGetPciDeviceInfo(int, unsigned short*, unsigned short*, unsigned long*, unsigned char*, unsigned long*, unsigned long*, unsigned long*, unsigned long*, unsigned long*, unsigned long*, unsigned short*, unsigned short*, unsigned char*, unsigned long*)
 	#----------------------------------
-	DioCommonGetPciDeviceInfo = lib.DioCommonGetDeviceInfo
+	DioCommonGetPciDeviceInfo = lib.DioCommonGetPciDeviceInfo
 	DioCommonGetPciDeviceInfo.restype = _uint
-	DioCommonGetPCiDeviceInfo.argtypes = (_int, _ushort_p, _ushort_p, _ulong_p, _uchar_p, _ulong_p, _ulong_p, _ulong_p, _ulong_p, _ulong_p, _ulong_p, _ushort_p, _ushort_p, _uchar_p, _ulong_p)
+	DioCommonGetPciDeviceInfo.argtypes = (_int, _ushort_p, _ushort_p, _ulong_p, _uchar_p, _ulong_p, _ulong_p, _ulong_p, _ulong_p, _ulong_p, _ulong_p, _ushort_p, _ushort_p, _uchar_p, _ulong_p)
 	
 	#int DioSetTimerConfig(int, unsigned char);
 	#----------------------------------
@@ -333,14 +348,14 @@ else:
 	
 	#int DioGetTimerConfig(int, unsigned char*);
 	#----------------------------------
-	DiogetTimerConfig = lib.DioGetTimerConfig
-	DioGEtTimerConfig.restype = _uint
+	DioGetTimerConfig = lib.DioGetTimerConfig
+	DioGetTimerConfig.restype = _uint
 	DioGetTimerConfig.argtypes = (_int, _uchar_p)
 	
 	#int DioGetTimerCount(int, unsigned char*);
 	#----------------------------------
 	DioGetTimerCount = lib.DioGetTimerCount
-	DioGetTimetCount.restype = _uint
+	DioGetTimerCount.restype = _uint
 	DioGetTimerCount.argtypes = (_int, _uchar_p)
 	
 	#int DioEintSetIrqMask(int, unsigned long);
@@ -365,7 +380,7 @@ else:
 	#----------------------------------
 	DioEintGetEdgeConfig = lib.DioEintGetEdgeConfig
 	DioEintGetEdgeConfig.restype = _uint
-	DioEintGetEDgeConfig.argtypes = (_int, _ulong_p, _ulong_p)
+	DioEintGetEdgeConfig.argtypes = (_int, _ulong_p, _ulong_p)
 	
 	#int DioEintSetIrqMaskEx(int, int, unsigned long);
 	#----------------------------------
@@ -401,7 +416,7 @@ else:
 	#----------------------------------
 	DioEintInputByte = lib.DioEintInputByte
 	DioEintInputByte.restype = _uint
-	DioEintInputByte,argtypes = (_int, _int, _uchar_p, _uchar_p)
+	DioEintInputByte.argtypes = (_int, _int, _uchar_p, _uchar_p)
 	
 	#int DioEintInputWord(int, int, unsigned short*, unsigned short*);
 	#----------------------------------
@@ -438,30 +453,6 @@ else:
 	DioGetRstinMask = lib.DioGetRstinMask
 	DioGetRstinMask.restype = _uint
 	DioGetRstinMask.argtypes = (_int, _ulong_p)
-	
-	#void CallBackProc(unsigned long, unsigned char, int);
-	#----------------------------------
-	CallBackProc = lib.CalBackProc
-	CallBackProc.restype = _uint
-	CallBackProc.argtypes = (_ulong, _uchar, _int)
-	
-	#void CallBackProcEx(unsigned long, unsigned char, unsigned long, unsigned long, int);
-	#----------------------------------
-	CallBackProcEx = lib.CallBackProcEx
-	CallBackProcEx.restype = _uint
-	CallBackProcEx.argtypes = (_ulong, _uchar, _ulong, _ulong, _int)
-	
-	#void EintCallBackProc(unsigned long, unsigned long*, int);
-	#----------------------------------
-	EintCallBackProc = lib.EintCallBackProc
-	EintCallBaclProc.restype = _uint
-	EintCallBackProc.argtypes = (_ulong, _ulong_p, _int)
-	
-	#void BGCallBackProc(unsigned short);
-	#----------------------------------
-	BGCallBackProc = lib.BGCallBackProc
-	BGCallBackProc = _uint
-	BGCallBackProc = (_uchar)
 	
 	#int DioOutputSync(int, int, unsigned long, unsigned long);
 	#----------------------------------
@@ -502,31 +493,19 @@ else:
 	#int DioGetBackGroundStatus(int, void*, unsigned long*, unsigned long*, unsigned long*, unsigned long*, unsigned long*, unsigned long*, unsigned long*, unsigned long*, unsigned long*, int*);
 	#----------------------------------
 	DioGetBackGroundStatus = lib.DioGetBackGroundStatus
-	DioGetBackGroundStatus.restype = _unit
+	DioGetBackGroundStatus.restype = _uint
 	DioGetBackGroundStatus.argtypes = (_int, _void_p, _ulong_p, _ulong_p, _ulong_p, _ulong_p, _ulong_p, _ulong_p, _ulong_p, _ulong_p, _ulong_p, _int_p)
 	
 	#int DioInputPointBack(int, void*, int*, unsigned long, LPDIOBGCALLBACK);
 	#----------------------------------
 	DioInputPointBack = lib.DioInputPointBack
 	DioInputPointBack.restype = _uint
-	DioInputPointBack.argtypes = (_int, _void_p, _int_p, _ulong_p, _P(LPDIOBGCALLBACK))
+	DioInputPointBack.argtypes = (_int, _void_p, _int_p, _ulong_p, _P(BGCallBackProc))
 	
 	#int DioOutputPointBack(int, void*, int*, unsigned long, LPDIOBGCALLBACK);
 	#----------------------------------
 	DioOutputPointBack = lib.DioOutputPointBack
 	DioOutputPointBack.restype = _uint
-	DioOutputPointBack.argtypes = (_int, _void_p, _int_p, _ulong, _P(LPDIOBGCALLBACK))
+	DioOutputPointBack.argtypes = (_int, _void_p, _int_p, _ulong, _P(BGCallBackProc))
 	
-
-
-
-
-
-
-
-
-
-
-
-
 
