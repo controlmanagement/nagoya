@@ -97,7 +97,7 @@ else:
     _int = ctypes.c_int
     _int_p = _P(ctypes.c_int)
     _uint = ctypes.c_uint
-    _ulong = ctypes.c_float
+    _ulong = ctypes.c_ulong
     _ulong_p = _P(ctypes.c_ulong)
     _ubyte = ctypes.c_ubyte
     _ubyte_p = _P(ctypes.c_ubyte)
