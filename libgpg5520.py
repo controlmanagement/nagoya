@@ -650,7 +650,7 @@ else:
     ImgSetImposeImage.restype = _int
     ImgSetImposeImage.argtypes = (_int, _ulong, _ulong, _ulong, _void_p, _ulong,)
 
-    # 51 int ImgSetImposeDateTime(int, PIFIMGDATE, PIFIMGTIME);
+    # 52 int ImgSetImposeDateTime(int, PIFIMGDATE, PIFIMGTIME);
     # -------------------
     ImgSetImposeDateTime = lib.ImgSetImposeDateTime
     ImgSetImposeDateTime.restype = _int
