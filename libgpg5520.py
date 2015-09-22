@@ -149,10 +149,12 @@ class IFIMGDATEINFO(pyinterface.Structure):
 # 5: ImgSetBuffer
 # 26: ImgAllocateSDRAM
 # 43: ImgSaveBitMapFile
+# structure 11: IMGCLIPCONFIG
 # =============
 # ImgSetBuffer : BufferFormat
 # ImgAllocateSDRAM : DataFormat
 # ImgSaveBitMapFile : BufferFormat
+# IMGCLIPCONFIG : dwDataFormat
 # ------------------
 IFIMG_COLOR_RGB32 = 
 IFIMG_COLOR_RGB24 = 
@@ -175,7 +177,8 @@ IFIMG_MEASUREMENT_PRO =
 IFIMG_MEASUREMENT_LBLCNT =
 IFIMG_MEASUREMENT_AREA =
 IFIMG_MEASUREMENT_GRV = 
-IFIMG_MEASUREMENT_FERE = 
+IFIMG_MEASUREMENT_FERE =
+IFIMG_MEASUREMENT_ELLIPSE =
 IFIMG_PIXEL_RGB =
 IFIMG_PIXEL_BGR = 
 
@@ -204,8 +207,10 @@ IFIMG_OUTMODE_COLORBAR =
 IFIMG_OUTMODE_PICTURE =
 
 # 24: ImgSetChannel
+# structure 9: IMGCAPCONFIG
 # =============
 # ImgSetChannel : ChannelNum
+# IMGCAPCONFIG : dwChangePattern
 # ------------------
 IFIMG_CHANNEL_CN1 =
 IFIMG_CHANNEL_CN4 =
@@ -221,8 +226,10 @@ IFIMG_BUFF_HEAD =
 IFIMG_BUFF_CONTINUATION =
 
 # 35: ImgSetColorIngredient
+# structure 4: IMGBINCONFIG
 # =============
 # ImgSetColorIngredient : Ingredient
+# IMGBINCONFIG : dwColorIngredient
 # ------------------
 IFIMG_INGREDIENT_RED =
 IFIMG_INGREDIENT_GREEN =
@@ -284,7 +291,7 @@ IFIMG_IMPOSE_PERMEATION_3_1 =
 IFIMG_IMPOSE_PERMEATION =
 IFIMG_IMPOSE_PERMEATION_1_3 =
 
-# 51: ImgSetImposeDateTimeInfo
+# 52: ImgSetImposeDateTimeInfo
 # =============
 # ImgSetImposeDateTimeInfo : SetMode
 # ------------------
@@ -292,6 +299,29 @@ IFIMG_IMPOSE_NONE_DATETIME =
 IFIMG_IMPOSE_SET_DATE =
 IFIMG_IMPOSE_SET_TIME = 
 IFIMG_IMPOSE_STRING_OUTLINE =
+
+# structure 9: IMGCAPCONFIG
+# =============
+# IMGCAPCONFIG : dwMode
+# ------------------
+IFIMG_CAPTURE_NORMAL =
+IFIMG_CAPTURE_THINOUT =
+IFIMG_CAPTURE_TIMER =
+IFIMG_CAPTURE_CH_FRAME =
+IFIMG_CAPTURE_CH_TIMER =
+
+# structure 10: IMGPTNCONFIG
+# =============
+# IMGPTNCONFIG : dwAutoRevision
+# ------------------
+IFIMG_AUTO_ENABLE =
+IFIMG_AUTO_DISABLE =
+
+# IMGPTNCONFIG : dwTriggerMode
+# ------------------
+IFIMG_PTNMATCH_NORMAL =
+IFIMG_PTNMATCH_REVERSAL =
+IFIMG_PTNMATCH_NONE =
 
 
 # ==========
