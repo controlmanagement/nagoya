@@ -525,6 +525,7 @@ class gpg6204_controller(object):
         15. PencSetCounterEx
         """
         self._log('set_counter_ex')
+        nChSel = PencGetCounterEx_nChSel.verify(nChSel)
         pulCounter = PencSetCounterEx_pulCounter.verify(pulCounter)
         ret = lib.PencSetCounterEx(self.ndev, nChSel, pulCounter)
         self._error_check(ret)
