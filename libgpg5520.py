@@ -64,13 +64,6 @@ class IMGEVENTTABLEEX(pyinterface.Structure):
                 ('dwYCoorddinates', ctypes.c_ulong),
                 ('dwPercentage', ctypes.c_ulong)]
 
-class IMGEVENTTABLEEX(pyinterface.Structure):
-    _fields_ = [('dwMode', ctypes.c_ulong),
-                ('dwThinFrameCnt', ctypes.c_ulong),
-                ('dwTimerCycle', ctypes.c_ulong),
-                ('dwChFrameCnt', ctypes.c_ulong),
-                ('dwChangePattern', ctypes.c_ulong)]
-
 class IMGCAPCONFIG(pyinterface.Structure):
     _fields_ = [('dwMode', ctypes.c_ulong),
                 ('dwThinFrameCnt', ctypes.c_ulong),
@@ -78,7 +71,7 @@ class IMGCAPCONFIG(pyinterface.Structure):
                 ('dwChFrameCnt', ctypes.c_ulong),
                 ('dwChangePattern[5]', ctypes.c_ulong)]
 
-class IMGTNCONFIG(pyinterface.Structure):
+class IMGPTNCONFIG(pyinterface.Structure):
     _fields_ = [('dwSDRAMId', ctypes.c_ulong),
                 ('dwAutoRevision', ctypes.c_ulong),
                 ('dwXCoorddinates', ctypes.c_ulong),
@@ -104,6 +97,12 @@ class IMGMEASURE(pyinterface.Structure):
                 ('dwFeretH', ctypes.c_ulong),
                 ('dwFeretV', ctypes.c_ulong),
                 ('dAngle', ctypes.c_float)]
+
+class IMGLUTINFO(pyinterface.Structure):
+    _fields_ = [('rgbBlue[256]', ctypes.c_ubyte),
+                ('rgbGreen[256]', ctypes.c_ubyte),
+                ('rgbRed[256]', ctypes.c_ubyte)
+                ]
 
 class IMGFILTER(pyinterface.Structure):
     _fields_ = [('a', ctypes.c_int),
@@ -149,7 +148,7 @@ class IFIMGDATEINFO(pyinterface.Structure):
 # 5: ImgSetBuffer
 # 26: ImgAllocateSDRAM
 # 43: ImgSaveBitMapFile
-# structure 11: IMGCLIPCONFIG
+# structure 10: IMGCLIPCONFIG
 # =============
 # ImgSetBuffer : BufferFormat
 # ImgAllocateSDRAM : DataFormat
@@ -207,7 +206,7 @@ IFIMG_OUTMODE_COLORBAR =
 IFIMG_OUTMODE_PICTURE =
 
 # 24: ImgSetChannel
-# structure 9: IMGCAPCONFIG
+# structure 8: IMGCAPCONFIG
 # =============
 # ImgSetChannel : ChannelNum
 # IMGCAPCONFIG : dwChangePattern
@@ -300,7 +299,7 @@ IFIMG_IMPOSE_SET_DATE =
 IFIMG_IMPOSE_SET_TIME = 
 IFIMG_IMPOSE_STRING_OUTLINE =
 
-# structure 9: IMGCAPCONFIG
+# structure 8: IMGCAPCONFIG
 # =============
 # IMGCAPCONFIG : dwMode
 # ------------------
@@ -310,7 +309,7 @@ IFIMG_CAPTURE_TIMER =
 IFIMG_CAPTURE_CH_FRAME =
 IFIMG_CAPTURE_CH_TIMER =
 
-# structure 10: IMGPTNCONFIG
+# structure 9: IMGPTNCONFIG
 # =============
 # IMGPTNCONFIG : dwAutoRevision
 # ------------------
