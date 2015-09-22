@@ -532,11 +532,57 @@ class gpg5520_controller(object):
         config.dwTrigger = IMGCAPSTATUSEX_dwTrigger(config.value)
         return config
 
-    def set_buffer(self, BufferFormat = 'IFIMG_COLOR_RGB24'):
+    def set_buffer(self, BufferFormat = 'IFIMG_COLOR_RGB24', Address, Size):
         """
         5. ImgSetBuffer
         """
-        
+        self._log('set_buffer')
+        BufferFormat = ImgSetBuffer_BufferFormat.verify(BufferFormat)
+        config = lib.IMGBUFFERINFO()
+        config.pBufferAddress = Address
+        config.dwBufferSize = Size
+        ret = lib.ImgSetBuffer(self.ndev, config, BufferFormat)
+        self._error_check(ret)
+        return
+
+
+    def start_capture(self, FrameCnt , StartMode = 'IFIMG_DMACAPTURE_START'):
+        """
+        7. ImgStartCapture
+        """
+        self._log('start_capture')
+        StartMode = ImgStartCapture_StartMode.verify(StartMode)
+        ret = lib.ImgStartCapture(self.ndev, FrameCnt, StartMode)
+        self._error_check(ret)
+        return
+
+
+    def clip_data(dest, src, FrameNum, dwDataFormat = 'IFIMG_COLOR_RGB24', dwXcoodinates = 0, dwYcoodinates = 0, dwXLength = 640, dwXLength = 480):
+        """
+        34. ImgClipData
+        """
+        self._log('clip_data')
+        dwDataFormat = ImgSetBuffer_BufferFormat.verify(dwDataFormat)
+        config = lib.IMGCLIPCONFIG()
+        config.dwDataFormat = dwDataFormat
+        config.dwXcoodinates = dwXcoodinates
+        config.dwYcoodinates = dwYcoodinates
+        config.dwXLength= dwXLength
+        config.dwYLength = dwYLength
+        ret = lib.ImgClipData(dest, src, FrameNum, config)
+        self._error_check(ret)
+        return
+
+
+    def save_bit_map_file(PathName, BufferPointer, BufferFormat = 'IFIMG_COLOR_RGB24', Width, Height):
+        """
+        43. ImgSaveBitMapFile
+        """
+        self._log('save_bit_map_file')
+        BufferFormat = ImgSetBuffer_BufferFormat.verify(BufferFormat)
+        ret = lib.ImgSaveBitMapFile(PathName, BufferPointer, BufferFormat, Width,Height)
+        self._error_check(ret)
+        return
 
 
 
