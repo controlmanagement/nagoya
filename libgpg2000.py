@@ -200,7 +200,7 @@ else:
 	#---------------------------------
 	DioOutputPoint = lib.DioOutputPoint
 	DioOutputPoint.restype = _uint
-	DioOutputPoint.argtypes = (_int, _int, _ulong, _ulong)
+	DioOutputPoint.argtypes = (_int, _int_p, _ulong, _ulong)
 	
 	#int DioInputByte(int, int, unsigned char*);
 	#---------------------------------
