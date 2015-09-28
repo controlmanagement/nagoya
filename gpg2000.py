@@ -586,7 +586,6 @@ class gpg2000_controller(object):
 		"""
 		self._log('in_point')
 		buffer = ctypes.c_int(0)
-		num = InputPoint(num)
 		ret = lib.DioInputPoint(self.ndev, buffer, startnum, num)
 		self._error_check(ret)
 		return buffer
@@ -596,7 +595,6 @@ class gpg2000_controller(object):
 		4. DioOutputPoint
 		"""
 		self._log('out_point')
-		num = InputPoint(num)
 		ret = lib.DioOutputPoint(self.ndev, buffer, startnum, num)
 		self._error_check(ret)
 		return buffer
