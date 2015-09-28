@@ -355,7 +355,7 @@ class gpg6204_controller(object):
         return
      
     def initialize(self):
-        self.open()
+        self.open('PENC_FLAG_NORMAL')
         return
     
     def open(self, fulFlags):
