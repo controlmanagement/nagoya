@@ -513,7 +513,7 @@ class ErrorGPG2000(pyinterface.ErrorCode):
 # GPG-2000 Python
 # ==========================
 class gpg2000(object):
-	def _init_(self, ndev=1, remote=False):
+	def __init__(self, ndev=1, remote=False):
 		initialize = not remote
 		self.ctrl = gpg2000_controller(ndev, initialize=initialize)
 		pass
@@ -536,7 +536,7 @@ class gpg2000_controller(object):
 	boardid = ''
 	print_log = True
 
-	def __init__(self, ndev=1, boardid=2000, initialize=True):
+	def __init__(self, ndev=1, boardid=2724, initialize=True):
 		"""
 		boardid = 2000
 		"""
@@ -567,7 +567,7 @@ class gpg2000_controller(object):
 		1. DioOpen
 		"""
 		self._log('open')
-		ret = lib.DioOpen(self.ndev)
+		ret = lib.DioOpen(self.ndev,0)
 		self._error_check(ret)
 		return
 
