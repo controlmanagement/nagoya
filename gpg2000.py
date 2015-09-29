@@ -601,7 +601,7 @@ class gpg2000_controller(object):
 		c_buff[0:num-1] = buffer[0:num-1]
 		ret = lib.DioOutputPoint(self.ndev, c_buff, startnum, num)
 		self._error_check(ret)
-		return buffer
+		return
 
 	def in_byte(self, no):
 		"""
@@ -645,7 +645,7 @@ class gpg2000_controller(object):
 		value = ctypes.c_char(value)
 		ret = lib.DioOutputByte(self.ndev, no, value)
 		self._error_check(ret)
-		return value
+		return
 
 	def out_word(self, no, value):
 		"""
@@ -656,7 +656,7 @@ class gpg2000_controller(object):
 		value = ctypes.c_ushort(value)
 		ret = lib.DioOutputWord(self.ndev, no, value)
 		self._error_check(ret)
-		return value
+		return
 
 	def out_dword(self, no, value):
 		"""
@@ -667,7 +667,7 @@ class gpg2000_controller(object):
 		value = ctypes.c_ulong(value)
 		ret = lib.DioOutputDword(self.ndev, no, value)
 		self._error_check(ret)
-		return value
+		return
 
 	def set_latch(self, status):
 		"""
