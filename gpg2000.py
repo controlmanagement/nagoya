@@ -513,7 +513,7 @@ class ErrorGPG2000(pyinterface.ErrorCode):
 # GPG-2000 Python
 # ==========================
 class gpg2000(object):
-	def __init__(self, ndev=1, remote=False):
+	def __init_(self, ndev=1, remote=False):
 		initialize = not remote
 		self.ctrl = gpg2000_controller(ndev, initialize=initialize)
 		pass
@@ -536,7 +536,7 @@ class gpg2000_controller(object):
 	boardid = ''
 	print_log = True
 
-	def __init__(self, ndev=1, boardid=2724, initialize=True):
+	def __init__(self, ndev=1, boardid=2000, initialize=True):
 		"""
 		boardid = 2000
 		"""
@@ -567,7 +567,7 @@ class gpg2000_controller(object):
 		1. DioOpen
 		"""
 		self._log('open')
-		ret = lib.DioOpen(self.ndev,0)
+		ret = lib.DioOpen(self.ndev, 0)
 		self._error_check(ret)
 		return
 
@@ -585,7 +585,7 @@ class gpg2000_controller(object):
 		3. DioInputPoint
 		"""
 		self._log('in_point')
-		buffer = ctypes.c_int(0)
+		buffer = ctypes.c_int*num
 		ret = lib.DioInputPoint(self.ndev, buffer, startnum, num)
 		self._error_check(ret)
 		return buffer
@@ -595,7 +595,11 @@ class gpg2000_controller(object):
 		4. DioOutputPoint
 		"""
 		self._log('out_point')
-		ret = lib.DioOutputPoint(self.ndev, buffer, startnum, num)
+		c_buff = ctypes.c_int*64
+		c_buff = c_buff(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+						0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
+		c_buff[0:num-1] = buffer[0:num-1]
+		ret = lib.DioOutputPoint(self.ndev, c_buff, startnum, num)
 		self._error_check(ret)
 		return buffer
 
@@ -638,7 +642,7 @@ class gpg2000_controller(object):
 		"""
 		self._log('out_byte')
 		no = OutputByteMode.verify(no)
-		value = ctypes.c_char(0)
+		value = ctypes.c_char(value)
 		ret = lib.DioOutputByte(self.ndev, no, value)
 		self._error_check(ret)
 		return value
@@ -649,7 +653,7 @@ class gpg2000_controller(object):
 		"""
 		self._log('out_word')
 		no = OutputWordMode.verify(no)
-		value = ctypes.c_ushort(0)
+		value = ctypes.c_ushort(value)
 		ret = lib.DioOutputWord(self.ndev, no, value)
 		self._error_check(ret)
 		return value
@@ -660,7 +664,7 @@ class gpg2000_controller(object):
 		"""
 		self._log('out_dword')
 		no = OutputDwordMode.verify(no)
-		value = ctypes.c_ulong(0)
+		value = ctypes.c_ulong(value)
 		ret = lib.DioOutputDword(self.ndev, no, value)
 		self._error_check(ret)
 		return value
@@ -670,7 +674,6 @@ class gpg2000_controller(object):
 		11. DioSetLatchStatus
 		"""
 		self._log('set_latch')
-		status = LatchStatus(status)
 		ret = lib.DioSetLatchStatus(self.ndev, status)
 		self._error_check(ret)
 		return
@@ -681,8 +684,8 @@ class gpg2000_controller(object):
 		"""
 		self._log('set_latch')
 		status = ctypes.c_char(0)
-		status = LatchStatus(status.value)
 		ret = lib.DioGetLatchStatus(self.ndev, status)
+		status = LatchStatus(status.value)
 		self._error_check(ret)
 		return status
 
@@ -692,8 +695,8 @@ class gpg2000_controller(object):
 		"""
 		self._log('get_ack')
 		status = ctypes.c_uchar(0)
-		status = AckStatus(status.value)
 		ret = lib.DioGetAckStatus(self.ndev, status)
+		status = AckStatus(status.value)
 		self._error_check(ret)
 		return status
 
@@ -702,7 +705,6 @@ class gpg2000_controller(object):
 		14. DioSetAckPulseCommand
 		"""
 		self._log('set_ack')
-		command = AckPulseCommand(command)
 		ret = lib.DioSetAckPulseCommand(self.ndev, status)
 		self._error_check(ret)
 		return
@@ -713,8 +715,8 @@ class gpg2000_controller(object):
 		"""
 		self._log('get_stb_status')
 		status = ctypes.c_uchar(0)
-		status = StbStatus(status.value)
 		ret = lib.DioGetStbStatus(self.ndev, status)
+		status = StbStatus(status.value)
 		self._error_check(ret)
 		return status
 
@@ -723,7 +725,6 @@ class gpg2000_controller(object):
 		16. DioSetStbPulseCommand
 		"""
 		self._log('set_stb')
-		command = StbPulseStatus(command)
 		ret = lib.DioSetStbPulseCommand(self.ndev, command)
 		self._error_check(ret)
 		return
@@ -736,14 +737,13 @@ class gpg2000_controller(object):
 		status = ctypes.c_uchar(0)
 		ret = lib.DioGetResetStatus(self.ndev, status)
 		self._error_check(ret)
-		return status.value
+		return status
 
 	def set_irq_mask(self, mask):
 		"""
 		18. DioSetIrqMask
 		"""
 		self._log('set_irq_mask')
-		mask = IrqMask(mask)
 		ret = lib.DioSetIrqMask(self.ndev, mask)
 		self._error_check(ret)
 		return
@@ -754,8 +754,8 @@ class gpg2000_controller(object):
 		"""
 		self._log('get_irq_mask')
 		mask = ctypes.c_uchar(0)
-		mask = IrqMask(mask.value)
 		ret = lib.DioGetIrqMask(self.ndev, mask)
+		mask = IrqMask(mask.value)
 		self._error_check(ret)
 		return mask
 
@@ -764,7 +764,6 @@ class gpg2000_controller(object):
 		20. DioSetIrqConfig
 		"""
 		self._log('set_irq_config')
-		config = IrqConfig(config)
 		ret = lib.DioSetIrqConfig(self.ndev, config)
 		self._error_check(ret)
 		return
@@ -775,8 +774,8 @@ class gpg2000_controller(object):
 		"""
 		self._log('get_irq_config')
 		config = ctypes.c_uchar(0)
-		config = IrqConfig(config.value)
 		ret = lib.DioGetIrqConfig(self.ndev, config)
+		config = IrqConfig(config.value)
 		self._error_check(ret)
 		return config
 
@@ -810,8 +809,8 @@ class gpg2000_controller(object):
 		"""
 		self._log('get_device_config')
 		device_config = ctypes.c_ulong(0)
-		device_config = DeviceConfig(device_config.value)
 		ret = lib.DioGetDeviceConfig(self.ndev, device_config)
+		device_config = DeviceConfig(device_config.value)
 		return device_config
 
 	def get_device_config_ex(self):
@@ -820,10 +819,10 @@ class gpg2000_controller(object):
 		"""
 		self._log('get_device_config_ex')
 		device_config = ctypes.c_ulong(0)
-		device_config = DeviceConfig(device_config.value)
 		device_config_ex = ctypes.c_ulong(0)
-		device_config_ex = DeviceConfigEx(device_config_ex.value)
 		ret = lib.DioGetDeviceConfigEx(self.ndev, device_config, device_config_ex)
+		device_config = DeviceConfig(device_config.value)
+		device_config_ex = DeviceConfigEx(device_config_ex.value)
 		return [device_config, device_config_ex]
 
 	def get_device_info(self):
@@ -853,7 +852,6 @@ class gpg2000_controller(object):
 		28. DioSetTimerConfig
 		"""
 		self._log('set_timer_config')
-		timer_config = TimerConfig(timer_config)
 		ret = lib.DioSetTimerConfig(self.ndev, timer_config)
 		return
 
@@ -863,8 +861,8 @@ class gpg2000_controller(object):
 		"""
 		self._log('get_timer_config')
 		timer_config = ctypes.c_uchar(0)
-		timer_config = TimerConfig(timer_config)
 		ret = lib.DioGetTimerConfig(self.ndev, timer_config)
+		timer_config = TimerConfig(timer_config)
 		return timer_config
 
 	def get_timer_count(self):
@@ -873,8 +871,8 @@ class gpg2000_controller(object):
 		"""
 		self._log('get_timer_count')
 		timer_count = ctypes.c_uchar(0)
-		timer_count = TimerCount(timer_count)
 		ret = lib.DioGetTimerCount(self.ndev, timer_count)
+		timer_count = TimerCount(timer_count)
 		return timer_count
 
 	def eint_set_irq_mask(self, irqmask):
@@ -882,7 +880,6 @@ class gpg2000_controller(object):
 		31. DioEintSetIrqMask
 		"""
 		self._log('eint_set_irq_mask')
-		irqmask = EintIrqMask(irqmask)
 		ret = lib.DioEintSetIrqMask(self.ndev, irqmask)
 		return
 
@@ -892,8 +889,8 @@ class gpg2000_controller(object):
 		"""
 		self._log('eint_get_irq_mask')
 		irqmask = ctypes.c_ulong(0)
-		irqmask = EintIrqMask(irqmask)
 		ret = lib.DioEintGetIrqMadk(self.ndev, irqmask)
+		irqmask = EintIrqMask(irqmask)
 		return irqmask
 
 	def set_edge_config(self, fall_config, rise_config):
@@ -901,8 +898,6 @@ class gpg2000_controller(object):
 		33. DioEintSetEdgeConfig
 		"""
 		self._log('set_edge_config')
-		fall_config = EintEdgeConfig(fall_config)
-		rise_config = EintEdgeConfig(rise_config)
 		ret = lib.DioEintSetEdgeConfig(self.ndev, fall_config, rise_config)
 		return
 
@@ -913,9 +908,9 @@ class gpg2000_controller(object):
 		self._log('get_edge_config')
 		fall_config = ctypes.c_ulong(0)
 		rise_config = ctypes.c_ulong(0)
+		ret = lib.DioEintGetEdgeConfig(self.ndev, fall_config, rise_config)
 		fall_config = EintEdgeConfig(fall_config)
 		rise_config = EintEdgeConfig(rise_config)
-		ret = lib.DioEintGetEdgeConfig(self.ndev, fall_config, rise_config)
 		return [fall_config, rise_config]
 
 	def set_irq_mask_ex(self, no, irqmask):
@@ -935,8 +930,8 @@ class gpg2000_controller(object):
 		self._log('get_irq_mask_ex')
 		no = InputDwordMode(no)
 		irqmask = ctypes.c_ulong(0)
-		irqmask = IrqMaskEx(irqmask)
 		ret = lib.DioEintGetIrqMaskEx(self.ndev, no, irqmask)
+		irqmask = IrqMaskEx(irqmask)
 		return irqmask
 
 	def set_edge_config_ex(self, no, fall_config, rise_config):
@@ -958,9 +953,9 @@ class gpg2000_controller(object):
 		no = InputDwordMode(no)
 		fall_config = ctypes.c_ulong(0)
 		rise_config = ctypes.c_ulong(0)
+		ret = lib.DioEintSetEdgeConfigEx(self.ndev, no, fall_config, rise_config)
 		fall_config = EintEdgeConfig(fall_config)
 		rise_config = EintEdgeConfig(rise_config)
-		ret = lib.DioEintSetEdgeConfigEx(self.ndev, no, fall_config, rise_config)
 		return [fall_config, rise_config]
 
 	def eint_in_point(self, startnum, num):
@@ -1012,8 +1007,8 @@ class gpg2000_controller(object):
 		self._log('get_filter')
 		no = EintFilterNo(no)
 		config = ctypes.c_int(0)
-		config = EintFilterConfig(config)
 		ret = lib.DioEintGetFilterConfig(self.ndev, no, config)
+		config = EintFilterConfig(config)
 		return config
 
 	def set_rstin_mask(self, mask):
@@ -1031,8 +1026,8 @@ class gpg2000_controller(object):
 		"""
 		self._log('get_rstin')
 		mask = ctypes.c_ulong(0)
-		mask = RstinMask(mask)
 		ret = lib.DioGetRstinMask(self.ndev, mask)
+		mask = RstinMask(mask)
 		return mask
 
 	def out_put_sync(self, line, up_edge, down_edge):
