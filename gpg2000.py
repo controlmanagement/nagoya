@@ -647,7 +647,7 @@ class gpg2000_controller(object):
         """
         self._log('out_byte')
         no = OutputByteMode.verify(no)
-        value = ctypes.c_char(value)
+        value = ctypes.c_ubyte(value)
         ret = lib.DioOutputByte(self.ndev, no, value)
         self._error_check(ret)
         return
@@ -688,7 +688,7 @@ class gpg2000_controller(object):
         12. DioGetLatchStatus
         """
         self._log('set_latch')
-        status = ctypes.c_char(0)
+        status = ctypes.c_ubyte(0)
         ret = lib.DioGetLatchStatus(self.ndev, status)
         status = LatchStatus(status.value)
         self._error_check(ret)
@@ -699,7 +699,7 @@ class gpg2000_controller(object):
         13. DioGetAckStatus
         """
         self._log('get_ack')
-        status = ctypes.c_uchar(0)
+        status = ctypes.c_ubyte(0)
         ret = lib.DioGetAckStatus(self.ndev, status)
         status = AckStatus(status.value)
         self._error_check(ret)
@@ -719,7 +719,7 @@ class gpg2000_controller(object):
         15. DioGetStbStatus
         """
         self._log('get_stb_status')
-        status = ctypes.c_uchar(0)
+        status = ctypes.c_ubyte(0)
         ret = lib.DioGetStbStatus(self.ndev, status)
         status = StbStatus(status.value)
         self._error_check(ret)
@@ -739,7 +739,7 @@ class gpg2000_controller(object):
         17. DioGetResetInStatus
         """
         self._log('get_reset')
-        status = ctypes.c_uchar(0)
+        status = ctypes.c_ubyte(0)
         ret = lib.DioGetResetStatus(self.ndev, status)
         self._error_check(ret)
         status = int(status.value)
@@ -759,7 +759,7 @@ class gpg2000_controller(object):
         19. DioGetIrqMask
         """
         self._log('get_irq_mask')
-        mask = ctypes.c_uchar(0)
+        mask = ctypes.c_ubyte(0)
         ret = lib.DioGetIrqMask(self.ndev, mask)
         mask = IrqMask(mask.value)
         self._error_check(ret)
@@ -779,7 +779,7 @@ class gpg2000_controller(object):
         21. DioGetIrqConfig
         """
         self._log('get_irq_config')
-        config = ctypes.c_uchar(0)
+        config = ctypes.c_ubyte(0)
         ret = lib.DioGetIrqConfig(self.ndev, config)
         config = IrqConfig(config.value)
         self._error_check(ret)
@@ -839,7 +839,7 @@ class gpg2000_controller(object):
         device_id = ctypes.c_ushort(0)
         vendor_id = ctypes.c_ushort(0)
         class_code = ctypes.c_ulong(0)
-        revision_id = ctypes.c_uchar(0)
+        revision_id = ctypes.c_ubyte(0)
         base_iddress0 = ctypes.c_ulong(0)
         base_iddress1 = ctypes.c_ulong(0)
         base_iddress2 = ctypes.c_ulong(0)
@@ -848,7 +848,7 @@ class gpg2000_controller(object):
         base_iddress5 = ctypes.c_ulong(0)
         system_id = ctypes.c_ushort(0)
         system_vendor_id = ctypes.c_ushort(0)
-        interrput_line = ctypes.c_uchar(0)
+        interrput_line = ctypes.c_ubyte(0)
         board_id = ctypes.c_ulong(0)
         ret = lib.DioCommonGetPciDeviceInfo(self.ndev, device_id, vendor_id, class_code, revision_id, base_iddress0, base_iddress1, base_iddress2, base_iddress3, base_iddress4, base_iddres5, system_id, system_vendor_id, interrput_id, board_id)
         return [device_id, vendor_id, class_code, revision_id, base_iddress0, base_iddress1, base_iddress2, base_iddress3, base_iddress4, base_iddres5, system_id, system_vendor_id, interrput_id, board_id]
@@ -866,7 +866,7 @@ class gpg2000_controller(object):
         29. DioGetTimerConfig
         """
         self._log('get_timer_config')
-        timer_config = ctypes.c_uchar(0)
+        timer_config = ctypes.c_ubyte(0)
         ret = lib.DioGetTimerConfig(self.ndev, timer_config)
         timer_config = TimerConfig(timer_config.value)
         return timer_config
@@ -876,7 +876,7 @@ class gpg2000_controller(object):
         30. DioGetTimerCount
         """
         self._log('get_timer_count')
-        timer_count = ctypes.c_uchar(0)
+        timer_count = ctypes.c_ubyte(0)
         ret = lib.DioGetTimerCount(self.ndev, timer_count)
         timer_count = TimerCount(timer_count.value)
         return timer_count
@@ -979,8 +979,8 @@ class gpg2000_controller(object):
         """
         self._log('eint_in_byte')
         no = InputByteMode(no)
-        fall_value = ctypes.c_uchar(0)
-        rise_value = ctypes.c_uchar(0)
+        fall_value = ctypes.c_ubyte(0)
+        rise_value = ctypes.c_ubyte(0)
         ret = lib.DioEintInputByte(self.ndev, no, fall_value, rise_value)
         return [fall_value, rise_value]
 
