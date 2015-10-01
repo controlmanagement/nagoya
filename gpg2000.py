@@ -600,7 +600,7 @@ class gpg2000_controller(object):
         c_buff = ctypes.c_int*64
         c_buff = c_buff(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
-        c_buff[0:num-1] = buffer[0:num-1]
+        c_buff[0:num] = buffer[0:num]
         ret = lib.DioOutputPoint(self.ndev, c_buff, startnum, num)
         self._error_check(ret)
         return
