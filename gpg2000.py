@@ -586,8 +586,8 @@ class gpg2000_controller(object):
         """
         self._log('in_point')
         buffer = ctypes.c_int*64
-        buffer = buffer(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-                        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
+        dum = [0]*64
+        buffer = buffer(*dum)
         ret = lib.DioInputPoint(self.ndev, buffer, startnum, num)
         self._error_check(ret)
         return buffer
@@ -598,8 +598,8 @@ class gpg2000_controller(object):
         """
         self._log('out_point')
         c_buff = ctypes.c_int*64
-        c_buff = c_buff(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-                        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
+        dum = [0]*64
+        c_buff = c_buff(*dum)
         c_buff[0:num] = buffer[0:num]
         ret = lib.DioOutputPoint(self.ndev, c_buff, startnum, num)
         self._error_check(ret)
