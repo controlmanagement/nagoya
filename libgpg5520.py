@@ -11,11 +11,6 @@ import pyinterface
 # Structures
 # ==========
 
-# function pointer
-# ----------------
-
-PLPIMGCALLBACKEX = ctypes.CFUNCTYPE(IMGEVENTTABLEEX, ctypes.c_ulong)
-
 # Original  
 # ------------
 class IMGCAPSTATUS(pyinterface.Structure):
@@ -121,12 +116,12 @@ class IMGDILATE_ERODE(pyinterface.Structure):
                 ('dwNeighborhood', ctypes.c_ulong)]
 
 class IFIMGTIME(pyinterface.Structure):
-    _fields_ = [('sec', ctypes.c_int,
+    _fields_ = [('sec', ctypes.c_int),
                 ('min', ctypes.c_int),
                 ('hour', ctypes.c_int)]
 
 class IFIMGDATE(pyinterface.Structure):
-    _fields_ = [('mday', ctypes.c_int,
+    _fields_ = [('mday', ctypes.c_int),
                 ('mon', ctypes.c_int),
                 ('year', ctypes.c_int)]
 
@@ -139,6 +134,12 @@ class IFIMGDATEINFO(pyinterface.Structure):
     _fields_ = [('Date', IFIMGDATE),
                 ('XCoorddinates', ctypes.c_int),
                 ('YCoorddinates', ctypes.c_int)]
+
+# function pointer
+# ----------------
+
+PLPIMGCALLBACK = ctypes.CFUNCTYPE(IMGEVENTTABLE, ctypes.c_ulong, ctypes.c_ulong)
+PLPIMGCALLBACKEX = ctypes.CFUNCTYPE(IMGEVENTTABLEEX, ctypes.c_ulong)
 
 
 # ==========
@@ -173,13 +174,13 @@ IFIMG_RESOLUTION_640_480 = 0x00000000L
 IFIMG_RESOLUTION_320_240 = 0x80000000L
 IFIMG_RESOLUTION_160_120 = 0x40000000L
 
-IFIMG_MEASUREMENT_HSIT = 
-IFIMG_MEASUREMENT_PRO =
-IFIMG_MEASUREMENT_LBLCNT =
-IFIMG_MEASUREMENT_AREA =
-IFIMG_MEASUREMENT_GRV = 
-IFIMG_MEASUREMENT_FERE =
-IFIMG_MEASUREMENT_ELLIPSE =
+IFIMG_MEASUREMENT_HSIT = 0x00000200
+IFIMG_MEASUREMENT_PRO = 0x00000700
+IFIMG_MEASUREMENT_LBLCNT = 0x00000800
+IFIMG_MEASUREMENT_AREA = 0x00001000
+IFIMG_MEASUREMENT_GRV = 0x00002000
+IFIMG_MEASUREMENT_FERE = 0x00004000
+IFIMG_MEASUREMENT_ELLIPSE = 0x00008000
 IFIMG_PIXEL_RGB = 0x00000000L
 IFIMG_PIXEL_BGR = 0x01000000L
 
@@ -338,31 +339,33 @@ IFIMG_PTNMATCH_NONE = 0x03
 # RETURN VALUE
 # ========== 
 IFIMG_ERROR_SUCCESS = 0
-IFIMG_ERROR_NOT_DEVICE = 0xc0000001
-IFIMG_ERROR_NOT_OPEN = 0xc0000002
-IFIMG_ERROR_INVALID_DEVICE_NUMBER =　0xc0000003
-IFIMG_ERROR_ALREADY_OPEN = 0xc0000004
-IFIMG_ERROR_NOT_SUPPORTED = 0xc0000009
-IFIMG_ERROR_INVALID_PARAMETER = 0xc0000010
-IFIMG_ERROR_NOT_ALLOCATE_MEMO = 0xc0000021
-IFIMG_ERROR_NOT_ALLOCATE_MEMONOW_CAPTURING = 0xc0001000
-IFIMG_ERROR_NOW_STOP = 0xc0001001
-IFIMG_ERROR_NULL_POINTER = 0xc0001002
-IFIMG_ERROR_WRITE_FAILED = 0xc0001003
-IFIMG_ERROR_READ_FAILED = 0xc0001004
-IFIMG_ERROR_NOBUFFER = 0xc0001005
-IFIMG_ERROR_INVALID_OFFSET = 0xc0001006
-IFIMG_ERROR_SDRAM_NOW_CAPTURING = 0xc0001007
-IFIMG_ERROR_SDRAM_NOW_STOP = 0xc0001008
-IFIMG_ERROR_NOT_SET_COMPDATA = 0xc0001009
-IFIMG_ERROR_SDRAM_NOTSET_CAPDATA = 0xc000100a
-IFIMG_ERROR_NOT_COMPDATA = 0xc000100b
-IFIMG_ERROR_INVALID_SDRAM_ID = 0xc000100c
-IFIMG_ERROR_SDRAM_NOT_CAPDATA = 0xc000100d
-IFIMG_ERROR_SDRAM_NOMEMORY = 0xc000100e
-IFIMG_ERROR_INVALID_FORMAT = 0xc000100f
-IFIMG_EROOR_NOW_SDRAM_BM = 0xc0001010
-IFIMG_ERROR_NOW_IMPOSEDATA_WRITE = 0xc000101d
+IFIMG_ERROR_NOT_DEVICE = 0xC0000001
+IFIMG_ERROR_NOT_OPEN = 0xC0000002
+IFIMG_ERROR_INVALID_DEVICE_NUMBER = 0xC0000003
+IFIMG_ERROR_ALREADY_OPEN = 0xC0000004
+IFIMG_ERROR_IO_PENDING = 0xC0000008
+IFIMG_ERROR_INSUFFICIENT_BUFFER = 0xC0000007
+IFIMG_ERROR_NOT_SUPPORTED = 0xC0000009
+IFIMG_ERROR_INVALID_PARAMETER = 0xC0000010
+IFIMG_ERROR_NOT_ALLOCATE_MEMORY = 0xC0000021
+IFIMG_ERROR_NOW_CAPTURING = 0xC0001000
+IFIMG_ERROR_NOW_STOP = 0xC0001001
+IFIMG_ERROR_NULL_POINTER = 0xC0001002
+IFIMG_ERROR_WRITE_FAILED = 0xC0001003
+IFIMG_ERROR_READ_FAILED = 0xC0001004
+IFIMG_ERROR_NOBUFFER = 0xC0001005
+IFIMG_ERROR_INVALID_OFFSET = 0xC0001006
+IFIMG_ERROR_SDRAM_NOW_CAPTURING = 0xC0001007
+IFIMG_ERROR_SDRAM_NOW_STOP = 0xC0001008
+IFIMG_ERROR_NOT_SET_COMPDATA = 0xC0001009
+IFIMG_ERROR_SDRAM_NOTSET_CAPDATA = 0xC000100A
+IFIMG_ERROR_NOT_COMPDATA = 0xC000100B
+IFIMG_ERROR_INVALID_SDRAM_ID = 0xC000100C
+IFIMG_ERROR_SDRAM_NOT_CAPDATA = 0xC000100D
+IFIMG_ERROR_SDRAM_NOMEMORY = 0xC000100E
+IFIMG_ERROR_INVALID_FORMAT = 0xC000100F
+IFIMG_EROOR_NOW_SDRAM_BM = 0xC0001010
+IFIMG_ERROR_NOW_IMPOSEDATA_WRITE = 0xC000101
 
 # =========
 # Functions
@@ -414,11 +417,11 @@ else:
     ImgGetCaptureStatusEx.restype = _int
     ImgGetCaptureStatusEx.argtypes = (_int, _P(IMGCAPSTATUSEX))
 
-    # 5 int ImgSetBuffer(int, PIMGBUFFERINFO);
+    # 5 int ImgSetBuffer(int, PIMGBUFFERINFO unsigned long);
     # -------------------
     ImgSetBuffer = lib.ImgSetBuffer
     ImgSetBuffer.restype = _int
-    ImgSetBuffer.argtypes = (_int, _P(IMGBUFFERINFO))
+    ImgSetBuffer.argtypes = (_int, _P(IMGBUFFERINFO), _ulong)
 
     # 6 int ImgGetMemPtrValue(int, void*);
     # -------------------
@@ -474,11 +477,11 @@ else:
     ImgSetBinarizationConfig.restype = _int
     ImgSetBinarizationConfig.argtypes = (_int, _ulong, _ulong, _ulong, _ulong,)
 
-    # 15 int ImgGetMeasurementValuel(int, unsigned long*, unsigned long*, unsigned long*, unsigned long*,);
+    # 15 int ImgGetMeasurementValue(int, unsigned long*, unsigned long*, unsigned long*, unsigned long*,);
     # -------------------
-    ImgGetMeasurementValuel = lib.ImgGetMeasurementValuel
-    ImgGetMeasurementValuel.restype = _int
-    ImgGetMeasurementValuel.argtypes = (_int, _ulong_p, _ulong_p, _ulong_p, _ulong_p,)
+    ImgGetMeasurementValue = lib.ImgGetMeasurementValue
+    ImgGetMeasurementValue.restype = _int
+    ImgGetMeasurementValue.argtypes = (_int, _ulong_p, _ulong_p, _ulong_p, _ulong_p,)
 
     # 16 int ImgSetTriggerConfig(int, PIMGTRGCONFIG);
     # -------------------
@@ -514,13 +517,13 @@ else:
     # -------------------
     ImgSetEvent = lib.ImgSetEvent
     ImgSetEvent.restype = _int
-    ImgSetEvent.argtypes = (_int, _P(LPIMGCALLBACK), _ulong,)
+    ImgSetEvent.argtypes = (_int, PLPIMGCALLBACK, _ulong,)
 
     # 22 int ImgSetEventEx(int, PLPIMGCALLBACK, unsigned long);
     # -------------------
     ImgSetEventEx = lib.ImgSetEventEx
     ImgSetEventEx.restype = _int
-    ImgSetEventEx.argtypes = (_int, _P(LPIMGCALLBACK), _ulong,)
+    ImgSetEventEx.argtypes = (_int, PLPIMGCALLBACK, _ulong,)
 
     # 23 int ImgKillEvent(int);
     # -------------------
@@ -604,7 +607,7 @@ else:
     # -------------------
     ImgGetMeasurementValueEx = lib.ImgGetMeasurementValueEx
     ImgGetMeasurementValueEx.restype = _int
-    ImgGetMeasurementValueEx.argtypes = (_int, _P(IMGMEASURE), _unlong*,)
+    ImgGetMeasurementValueEx.argtypes = (_int, _P(IMGMEASURE), _ulong_p,)
 
     # 37 int ImgSetConversionConfig(int, unsigned long);
     # -------------------
@@ -642,11 +645,11 @@ else:
     ImgGetMeasurementValueLBL.restype = _int
     ImgGetMeasurementValueLBL.argtypes = (_int, _void_p, _ulong, _ulong_p, _P(IMGMEASURE),)
 
-    # 43 int ImgSaveBitMapFile(char*, void*, unsigned long, long, long);
+    # 43 int ImgSaveBitmapFile(char*, void*, unsigned long, long, long);
     # -------------------
-    ImgSaveBitMapFile = lib.ImgSaveBitMapFile
-    ImgSaveBitMapFile.restype = _int
-    ImgSaveBitMapFile.argtypes = (_char_p, _void_p, _ulong, _long, _long,)
+    ImgSaveBitmapFile = lib.ImgSaveBitmapFile
+    ImgSaveBitmapFile.restype = _int
+    ImgSaveBitmapFile.argtypes = (_char_p, _void_p, _ulong, _long, _long,)
 
     # 44 int ImgSetDecoderConfig(int, unsigned long, unsigned long);
     # -------------------
@@ -700,4 +703,4 @@ else:
     # -------------------
     ImgSetImposeDateTimeInfo = lib.ImgSetImposeDateTimeInfo
     ImgSetImposeDateTimeInfo.restype = _int
-    ImgSetImposeDateTimeInfo.argtypes = (_int, _P(IFIMGDATE), _P(IFIMGTIME), _ulong, _ulong*, _ulong,)
+    ImgSetImposeDateTimeInfo.argtypes = (_int, _P(IFIMGDATE), _P(IFIMGTIME), _ulong, _ulong_p, _ulong,)
