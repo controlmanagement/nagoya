@@ -71,7 +71,7 @@ class ImgStopCapture_StopMode(pyinterface.Identifer):
 class ImgSetOutputMode_Mode(pyinterface.Identifer):
     IFIMG_OUTMODE_THROUGH = pIE('IFIMG_OUTMODE_THROUGH', lib.IFIMG_OUTMODE_THROUGH)
     IFIMG_OUTMODE_COLORBAR = pIE('IFIMG_OUTMODE_COLORBAR', lib.IFIMG_OUTMODE_COLORBAR)
-    IFIMG_OUTMODE_PICTURE = pIE('IFIMG_OUTMODE_PICTURE', lib.IFIMG_OUTMODE_PICTURE)
+    IFIMG_OUTMODE_STILL_PICTURE = pIE('IFIMG_OUTMODE_STILL_PICTURE', lib.IFIMG_OUTMODE_STILL_PICTURE)
     pass
 
 # 17: ImgInputDI
@@ -419,33 +419,35 @@ class IMGDILATE_ERODE_dwNeighborhood(pyinterface.BitIdentifer):
 
 # Error Wrapper
 # =============
-class ErrorGPG7204(pyinterface.ErrorCode):
+class ErrorGPG5520(pyinterface.ErrorCode):
     IFIMG_ERROR_SUCCESS = pIE('IFIMG_ERROR_SUCCESS', lib.IFIMG_ERROR_SUCCESS)
     IFIMG_ERROR_NOT_DEVICE = pIE('IFIMG_ERROR_NOT_DEVICE', lib.IFIMG_ERROR_NOT_DEVICE)
     IFIMG_ERROR_NOT_OPEN = pIE('IFIMG_ERROR_NOT_OPEN', lib.IFIMG_ERROR_NOT_OPEN)
-    IFIMG_ERROR_INVALID_DEVICE_NUMBER = pIE('IFIMG_ERROR_INVALID_DEVICE_NUMBER',lib.IFIMG_ERROR_INVALID_DEVICE_NUMBER)
-    IFIMG_ERROR_ALREADY_OPEN = pIE('IFIMG_ERROR_ALREADY_OPEN',lib.IFIMG_ERROR_ALREADY_OPEN)
-    IFIMG_ERROR_NOT_SUPPORTED = pIE('IFIMG_ERROR_NOT_SUPPORTED',lib.IFIMG_ERROR_NOT_SUPPORTED)
-    IFIMG_ERROR_INVALID_PARAMETER = pIE('IFIMG_ERROR_INVALID_PARAMETER',lib.IFIMG_ERROR_INVALID_PARAMETER)
-    IFIMG_ERROR_NOT_ALLOCATE_MEMO = pIE('IFIMG_ERROR_NOT_ALLOCATE_MEMO',lib.IFIMG_ERROR_NOT_ALLOCATE_MEMO)
-    IFIMG_ERROR_NOT_ALLOCATE_MEMONOW_CAPTURING = pIE('IFIMG_ERROR_NOT_ALLOCATE_MEMONOW_CAPTURING',lib.IFIMG_ERROR_NOT_ALLOCATE_MEMONOW_CAPTURING)
-    IFIMG_ERROR_NOW_STOP = pIE('IFIMG_ERROR_NOW_STOP',lib.IFIMG_ERROR_NOW_STOP)
-    IFIMG_ERROR_NULL_POINTER = pIE('IFIMG_ERROR_NULL_POINTER',lib.IFIMG_ERROR_NULL_POINTER)
+    IFIMG_ERROR_INVALID_DEVICE_NUMBER = pIE('IFIMG_ERROR_INVALID_DEVICE_NUMBER', lib.IFIMG_ERROR_INVALID_DEVICE_NUMBER)
+    IFIMG_ERROR_ALREADY_OPEN = pIE('IFIMG_ERROR_ALREADY_OPEN', lib.IFIMG_ERROR_ALREADY_OPEN)
+    IFIMG_ERROR_INSUFFICIENT_BUFFER = pIE('IFIMG_ERROR_INSUFFICIENT_BUFFER', lib.IFIMG_ERROR_INSUFFICIENT_BUFFER)
+    IFIMG_ERROR_IO_PENDING = pIE('IFIMG_ERROR_IO_PENDING', lib.IFIMG_ERROR_IO_PENDING)
+    IFIMG_ERROR_NOT_SUPPORTED = pIE('IFIMG_ERROR_NOT_SUPPORTED', lib.IFIMG_ERROR_NOT_SUPPORTED)
+    IFIMG_ERROR_INVALID_PARAMETER = pIE('IFIMG_ERROR_INVALID_PARAMETER', lib.IFIMG_ERROR_INVALID_PARAMETER)
+    IFIMG_ERROR_NOT_ALLOCATE_MEMORY = pIE('IFIMG_ERROR_NOT_ALLOCATE_MEMORY', lib.IFIMG_ERROR_NOT_ALLOCATE_MEMORY)
+    IFIMG_ERROR_NOW_CAPTURING = pIE('IFIMG_ERROR_NOW_CAPTURING', lib.IFIMG_ERROR_NOW_CAPTURING)
+    IFIMG_ERROR_NOW_STOP = pIE('IFIMG_ERROR_NOW_STOP', lib.IFIMG_ERROR_NOW_STOP)
+    IFIMG_ERROR_NULL_POINTER = pIE('IFIMG_ERROR_NULL_POINTER', lib.IFIMG_ERROR_NULL_POINTER)
     IFIMG_ERROR_WRITE_FAILED = pIE('IFIMG_ERROR_WRITE_FAILED', lib.IFIMG_ERROR_WRITE_FAILED)
     IFIMG_ERROR_READ_FAILED = pIE('IFIMG_ERROR_READ_FAILED', lib.IFIMG_ERROR_READ_FAILED)
-    IFIMG_ERROR_NOBUFFER = pIE('IFIMG_ERROR_NOBUFFER',lib.IFIMG_ERROR_NOBUFFER)
-    IFIMG_ERROR_INVALID_OFFSET = pIE('IFIMG_ERROR_INVALID_OFFSET',lib.IFIMG_ERROR_INVALID_OFFSET)
-    IFIMG_ERROR_SDRAM_NOW_CAPTURING = pIE('IFIMG_ERROR_SDRAM_NOW_CAPTURING',lib.IFIMG_ERROR_SDRAM_NOW_CAPTURING)
-    IFIMG_ERROR_SDRAM_NOW_STOP = pIE('IFIMG_ERROR_SDRAM_NOW_STOP',lib.IFIMG_ERROR_SDRAM_NOW_STOP)
+    IFIMG_ERROR_NOBUFFER = pIE('IFIMG_ERROR_NOBUFFER', lib.IFIMG_ERROR_NOBUFFER)
+    IFIMG_ERROR_INVALID_OFFSET = pIE('IFIMG_ERROR_INVALID_OFFSET', lib.IFIMG_ERROR_INVALID_OFFSET)
+    IFIMG_ERROR_SDRAM_NOW_CAPTURING = pIE('IFIMG_ERROR_SDRAM_NOW_CAPTURING', lib.IFIMG_ERROR_SDRAM_NOW_CAPTURING)
+    IFIMG_ERROR_SDRAM_NOW_STOP = pIE('IFIMG_ERROR_SDRAM_NOW_STOP', lib.IFIMG_ERROR_SDRAM_NOW_STOP)
     IFIMG_ERROR_NOT_SET_COMPDATA = pIE('IFIMG_ERROR_NOT_SET_COMPDATA',lib.IFIMG_ERROR_NOT_SET_COMPDATA)
-    IFIMG_ERROR_SDRAM_NOTSET_CAPDATA = pIE('IFIMG_ERROR_SDRAM_NOTSET_CAPDATA',lib.IFIMG_ERROR_SDRAM_NOTSET_CAPDATA)
-    IFIMG_ERROR_NOT_COMPDATA = pIE('IFIMG_ERROR_NOT_COMPDATA',lib.IFIMG_ERROR_NOT_COMPDATA)
-    IFIMG_ERROR_INVALID_SDRAM_ID = pIE('IFIMG_ERROR_INVALID_SDRAM_ID',lib.IFIMG_ERROR_INVALID_SDRAM_ID)
-    IFIMG_ERROR_SDRAM_NOT_CAPDATA = pIE('IFIMG_ERROR_SDRAM_NOT_CAPDATA',lib.IFIMG_ERROR_SDRAM_NOT_CAPDATA)
-    IFIMG_ERROR_SDRAM_NOMEMORY = pIE('IFIMG_ERROR_SDRAM_NOMEMORY',lib.IFIMG_ERROR_SDRAM_NOMEMORY)
-    IFIMG_ERROR_INVALID_FORMAT = pIE('IFIMG_ERROR_INVALID_FORMAT',lib.IFIMG_ERROR_INVALID_FORMAT)
-    IFIMG_EROOR_NOW_SDRAM_BM = pIE('IFIMG_EROOR_NOW_SDRAM_BM',lib.IFIMG_EROOR_NOW_SDRAM_BM)
-    IFIMG_ERROR_NOW_IMPOSEDATA_WRITE = pIE('IFIMG_ERROR_NOW_IMPOSEDATA_WRITE',lib.IFIMG_ERROR_NOW_IMPOSEDATA_WRITE)
+    IFIMG_ERROR_SDRAM_NOTSET_CAPDATA = pIE('IFIMG_ERROR_SDRAM_NOTSET_CAPDATA', lib.IFIMG_ERROR_SDRAM_NOTSET_CAPDATA)
+    IFIMG_ERROR_NOT_COMPDATA = pIE('IFIMG_ERROR_NOT_COMPDATA', lib.IFIMG_ERROR_NOT_COMPDATA)
+    IFIMG_ERROR_INVALID_SDRAM_ID = pIE('IFIMG_ERROR_INVALID_SDRAM_ID', lib.IFIMG_ERROR_INVALID_SDRAM_ID)
+    IFIMG_ERROR_SDRAM_NOT_CAPDATA = pIE('IFIMG_ERROR_SDRAM_NOT_CAPDATA', lib.IFIMG_ERROR_SDRAM_NOT_CAPDATA)
+    IFIMG_ERROR_SDRAM_NOMEMORY = pIE('IFIMG_ERROR_SDRAM_NOMEMORY', lib.IFIMG_ERROR_SDRAM_NOMEMORY)
+    IFIMG_ERROR_INVALID_FORMAT = pIE('IFIMG_ERROR_INVALID_FORMAT', lib.IFIMG_ERROR_INVALID_FORMAT)
+    IFIMG_EROOR_NOW_SDRAM_BM = pIE('IFIMG_EROOR_NOW_SDRAM_BM', lib.IFIMG_EROOR_NOW_SDRAM_BM)
+    IFIMG_ERROR_NOW_IMPOSEDATA_WRITE = pIE('IFIMG_ERROR_NOW_IMPOSEDATA_WRITE', lib.IFIMG_ERROR_NOW_IMPOSEDATA_WRITE)
 
     _success = IFIMG_ERROR_SUCCESS
     pass
@@ -460,10 +462,21 @@ class gpg5520(object):
         self.ctrl = gpg5520_controller(ndev, initialize=initialize)
         pass
     
-    def set_format(self, frame_no, size=640*480, format='IFIMG_COLOR_RGB24')
-        pData = size*frame_no*[0]
-        Size = size*frame_no
-        self.ctrl.set_buffer(self, BufferFormat = format, pData, Size):
+    def set_format(self, frame_no, size=640*480, Bufformat='IFIMG_COLOR_RGB24'):
+        datanum = size*frame_no
+        retval = ctypes.c_int(datanum)
+        address = retval.value
+        #data = [0]*datanum
+        #arr = ctypes.c_byte*datanum
+        #pData = 0
+        #pArr = ctypes.c_void_p(pData)
+        #pArr = arr(*data)
+        #pArr = ctypes.byref(pData)
+        #p=bytearray(datanum)
+        #print(p[0:])
+        #pArr = ctypes.c_void_p(pData)
+        #pArr=ctypes.c_void_p(p)
+        self.ctrl.set_buffer(address, datanum, Bufformat)
         return
     
     def start_cap(self, frame_no, StartMode = 'IFIMG_DMACAPTURE_START'):
@@ -474,14 +487,14 @@ class gpg5520(object):
         ret = self.ctrl.get_capture_status(self)
         return ret
     
-    def get_data(self, frame_no, size=640*480, framenum, dwDataFormat = 'IFIMG_COLOR_RGB24', dwXcoodinates = 0, dwYcoodinates = 0, dwXLength = 640, dwXLength = 480):
+    def get_data(self, frame_no, framenum, size=640*480, dwDataFormat = 'IFIMG_COLOR_RGB24', dwXcoodinates = 0, dwYcoodinates = 0, dwXLength = 640, dwYLength = 480):
         pData_frame = size*[0]
         pData = size*frame_no
         ret = self.ctrl.clip_data(pData_frame, pData, framenum, dwDataFormat, dwXcoodinates, dwYcoodinates, dwXLength, dwYLength)
         return
 
     def save(filename, cvalue, BufferFormat = 'IFIMG_COLOR_RGB24', Width = 640, Height = 480):
-        self.ctrl.save_bit_map_file(filename, cvalue, BufferFormat, Width, Height):
+        self.ctrl.save_bit_map_file(filename, cvalue, BufferFormat, Width, Height)
         return
 
 
@@ -496,7 +509,7 @@ class gpg5520_controller(object):
     boardid = ''
     print_log = True
     
-    def __init__(self, ndev=1, boardid=5520, initialize=True):
+    def __init__(self, ndev=1, boardid=5521, initialize=True):
         """
         boardid = 5520
         """
@@ -526,6 +539,7 @@ class gpg5520_controller(object):
         self._log('open')
         ret = lib.ImgOpen(self.ndev)
         self._error_check(ret)
+        print(ret)
         return
 
     def close(self):
@@ -568,16 +582,17 @@ class gpg5520_controller(object):
         config.dwTrigger = IMGCAPSTATUSEX_dwTrigger(config.value)
         return config
 
-    def set_buffer(self, BufferFormat = 'IFIMG_COLOR_RGB24', Address, Size):
+    def set_buffer(self, Address, Size, Bufferformat = 'IFIMG_COLOR_RGB24'):
         """
         5. ImgSetBuffer
         """
         self._log('set_buffer')
-        BufferFormat = ImgSetBuffer_BufferFormat.verify(BufferFormat)
+        BufferFormat = ImgSetBuffer_BufferFormat.verify(Bufferformat)
         config = lib.IMGBUFFERINFO()
-        config.pBufferAddress = Address
-        config.dwBufferSize = Size
+        config.pBufferAddress = Size
+        config.dwBufferSize = Address
         ret = lib.ImgSetBuffer(self.ndev, config, BufferFormat)
+        print(ret)
         self._error_check(ret)
         return
 
@@ -610,7 +625,7 @@ class gpg5520_controller(object):
         return
 
 
-    def save_bit_map_file(PathName, BufferPointer, BufferFormat = 'IFIMG_COLOR_RGB24', Width, Height):
+    def save_bit_map_file(PathName, BufferPointer, BufferFormat = 'IFIMG_COLOR_RGB24', Width = 640, Height = 480):
         """
         43. ImgSaveBitMapFile
         """
