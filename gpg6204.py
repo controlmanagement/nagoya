@@ -300,8 +300,8 @@ class gpg6204(object):
         self.ctrl = gpg6204_controller(ndev, initialize=initialize)
         pass
 
-    def get_position(nChannel):
-        ret = self.ctrl.get_counter(self, nChannel)
+    def get_position(self):
+        ret = self.ctrl.get_counter(self)
         return ret
 
     def di_check(self):
