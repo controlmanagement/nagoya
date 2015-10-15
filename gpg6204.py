@@ -301,7 +301,7 @@ class gpg6204(object):
         pass
 
     def get_position(self):
-        ret = self.ctrl.get_counter(self)
+        ret = self.ctrl.get_counter()
         return ret
 
     def di_check(self):
