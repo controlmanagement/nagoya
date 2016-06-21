@@ -25,7 +25,7 @@ class IMGCAPSTATUSEX(pyinterface.Structure):
                 ('dwTrigger', ctypes.c_ulong)]
 
 class IMGBUFFERINFO(pyinterface.Structure):
-    _fields_ = [('pBufferAddress', ctypes.c_void_p),
+    _fields_ = [('pBufferAddress', ctypes.POINTER(ctypes.c_void_p)),
                 ('dwBufferSize', ctypes.c_ulong)]
 
 class IMGBINCONFIG(pyinterface.Structure):
@@ -593,9 +593,9 @@ else:
 
     # 34 int ImgClipData(void*, void*, unsigned long, PIMGCLIPCONFIG);
     # -------------------
-    ImgGetMachingLevel = lib.ImgGetMachingLevel
-    ImgGetMachingLevel.restype = _int
-    ImgGetMachingLevel.argtypes = (_void_p, _void_p, _P(IMGCLIPCONFIG),)
+    ImgClipData = lib.ImgClipData
+    ImgClipData.restype = _int
+    ImgClipData.argtypes = (_void_p, _void_p, _ulong, _P(IMGCLIPCONFIG),)
 
     # 35 int ImgSetColorIngredient(int, unsigned long);
     # -------------------
