@@ -464,31 +464,27 @@ class gpg5520(object):
     
     def set_format(self, frame_no, size=640*480, Bufformat='IFIMG_COLOR_RGB24'):
         datanum = size*frame_no
-        retval = ctypes.c_int(datanum)
-        address = retval.value
-        #data = [0]*datanum
-        #arr = ctypes.c_byte*datanum
-        #pData = 0
-        #pArr = ctypes.c_void_p(pData)
-        #pArr = arr(*data)
-        #pArr = ctypes.byref(pData)
-        #p=bytearray(datanum)
-        #print(p[0:])
-        #pArr = ctypes.c_void_p(pData)
-        #pArr=ctypes.c_void_p(p)
+        data = ctypes.c_int*datanum
+        num = [0]*datanum
+        pdata = data(*num)
+        address = ctypes.cast(pdata, ctypes.POINTER(ctypes.c_void_p))
+        #address = ctypes.byref(pdata)
+        #address = ctypes.pointer(pdata)
         self.ctrl.set_buffer(address, datanum, Bufformat)
         return
     
     def start_cap(self, frame_no, StartMode = 'IFIMG_DMACAPTURE_START'):
-        self.ctrl.start_capture(self, frameno, StartMode)
+        self.ctrl.start_capture(frame_no, StartMode)
         return
     
     def get_status(self):
-        ret = self.ctrl.get_capture_status(self)
+        ret = self.ctrl.get_capture_status()
         return ret
     
-    def get_data(self, frame_no, framenum, size=640*480, dwDataFormat = 'IFIMG_COLOR_RGB24', dwXcoodinates = 0, dwYcoodinates = 0, dwXLength = 640, dwYLength = 480):
-        pData_frame = size*[0]
+    def get_data(self, frame_no, framenum, size=640*480*3, dwDataFormat = 'IFIMG_COLOR_RGB24', dwXcoodinates = 0, dwYcoodinates = 0, dwXLength = 640, dwYLength = 480):
+        data = ctypes.c_int*size
+        num = [0]*size
+        pData_frame = data(*num)
         pData = size*frame_no
         ret = self.ctrl.clip_data(pData_frame, pData, framenum, dwDataFormat, dwXcoodinates, dwYcoodinates, dwXLength, dwYLength)
         return
@@ -589,8 +585,8 @@ class gpg5520_controller(object):
         self._log('set_buffer')
         BufferFormat = ImgSetBuffer_BufferFormat.verify(Bufferformat)
         config = lib.IMGBUFFERINFO()
-        config.pBufferAddress = Size
-        config.dwBufferSize = Address
+        config.pBufferAddress = Address
+        config.dwBufferSize = Size
         ret = lib.ImgSetBuffer(self.ndev, config, BufferFormat)
         print(ret)
         self._error_check(ret)
@@ -608,7 +604,7 @@ class gpg5520_controller(object):
         return
 
 
-    def clip_data(dest, src, FrameNum, dwDataFormat = 'IFIMG_COLOR_RGB24', dwXcoodinates = 0, dwYcoodinates = 0, dwXLength = 640, dYLength = 480):
+    def clip_data(self, dest, src, FrameNum, dwDataFormat = 'IFIMG_COLOR_RGB24', dwXcoodinates = 0, dwYcoodinates = 0, dwXLength = 640, dwYLength = 480):
         """
         34. ImgClipData
         """
